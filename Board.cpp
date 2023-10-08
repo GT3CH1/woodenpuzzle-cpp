@@ -22,10 +22,6 @@ Board::Board(const Board &other) {
     this->pieces = std::set<char>(other.pieces);
 }
 
-Board::~Board() {
-    // TODO Auto-generated destructor stub
-}
-
 char *Board::get_data() {
     return this->data;
 }
@@ -81,17 +77,17 @@ bool Board::is_invalid() {
             } else if (curr_data == '_' && found_piece)
                 return true;
             else if (x == 0 && y == 0) {
-                if (this->data[1] != '_' || this->data[10] != '_') {
+                if (this->data[1] != '_' && this->data[10] != '_') {
                     return true;
                 }
             } else if (x == 9 && y == 0) {
-                if (this->data[8] != '_' || this->data[19] != '_')
+                if (this->data[8] != '_' && this->data[19] != '_')
                     return true;
             } else if (x == 0 && y == 5) {
-                if (this->data[1] != '_' || this->data[10] != '_')
+                if (this->data[1] != '_' && this->data[10] != '_')
                     return true;
             } else if (x == 9 && y == 5) {
-                if (this->data[8] != '_' || this->data[19] != '_')
+                if (this->data[58] != '_' && this->data[49] != '_' )
                     return true;
             }
                 // if 1<=x<9 and y == 0

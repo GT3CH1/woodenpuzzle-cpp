@@ -1,7 +1,7 @@
 PIECES := $(wildcard *Piece*.cpp)
 SOURCES := $(PIECES:.cpp=.o)
 GCC := g++
-CFLAGS := -Wall -g  -std=c++17
+CFLAGS := -Wall -O3 -std=c++17
 
 $(PIECES:%.o): %.cpp
 	$(GCC) $(CFLAGS) $< -c

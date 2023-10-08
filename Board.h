@@ -8,7 +8,6 @@ namespace puzzle {
 	class Board {
 		public:
 			Board();
-			~Board();
 			Board(const Board &other);
 			char* get_data();
 			bool piece_placed(char symbol);

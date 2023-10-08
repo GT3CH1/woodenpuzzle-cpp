@@ -20,21 +20,22 @@ std::tuple<bool, Board> Puzzle::solve(Board board, std::vector<PuzzlePiece> avai
             for (int x = 0; x < 10; x++) {
                 for (int flip = 0; flip < 1; flip++) {
                     for (int rotate = 0; rotate < 4; rotate++) {
-                        if(rotate == 2 && flip == 0 && x == 7 && y == 0 && piece_copy.get_symbol() == 'U') {
-                            std::cout << "here" << std::endl;
-                        }
                         if (copy.add_piece(x, y, piece_copy)) {
                             if (!copy.is_invalid()) {
-                                if (print_steps)
-                                    copy.print_board();
                                 placed_copy.insert(piece_copy);
+                                if (print_steps) {
+                                    copy.print_board();
+                                }
                                 if (copy.is_solved()) {
                                     if (visited.find(Board(copy)) != visited.end()) {
-                                        return std::make_tuple(false, board);
+                                        continue;
                                     }
-                                    visited.insert(Board(copy));
                                     copy.print_board();
-                                    return std::make_tuple(true, copy);
+                                    if (!all_solutions) {
+                                        return std::make_tuple(true, copy);
+                                    } else {
+                                        visited.insert(Board(copy));
+                                    }
                                 }
                                 // remove piece from available pieces
                                 auto available_copy = std::vector<PuzzlePiece>();
@@ -46,9 +47,6 @@ std::tuple<bool, Board> Puzzle::solve(Board board, std::vector<PuzzlePiece> avai
                                 auto sol = solve(Board(copy), available_copy, placed_copy);
                                 if (std::get<0>(sol)) {
                                     visited.insert(Board(copy));
-                                    if (all_solutions) {
-                                        break;
-                                    }
                                     return sol;
                                 }
                             }
