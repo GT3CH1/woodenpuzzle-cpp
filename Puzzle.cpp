@@ -5,6 +5,7 @@ using namespace puzzle;
 auto visited = std::set<Board>();
 
 bool all_solutions = false;
+bool print_steps = false;
 
 std::tuple<bool, Board> Puzzle::solve(Board board, std::vector<PuzzlePiece> available, std::set<PuzzlePiece> placed) {
     Board copy = Board(board);
@@ -21,26 +22,35 @@ std::tuple<bool, Board> Puzzle::solve(Board board, std::vector<PuzzlePiece> avai
                     for (int x = 0; x < 10; x++) {
                         if (copy.add_piece(x, y, piece_copy)) {
                             if (!copy.is_invalid()) {
+                                if (print_steps)
+                                    copy.print_board();
                                 placed_copy.insert(piece_copy);
                                 if (copy.is_solved()) {
-                                    if(visited.find(copy) != visited.end()) {
-                                        if (all_solutions) {
-                                            continue;
-                                        }
+                                    if (visited.find(Board(copy)) != visited.end()) {
+                                        return std::make_tuple(false, board);
                                     }
-                                    visited.insert(copy);
+                                    visited.insert(Board(copy));
                                     copy.print_board();
                                     return std::make_tuple(true, copy);
                                 }
-                                auto sol = solve(Board(copy), available, placed_copy);
-                                if (std::get<0>(sol) ) {
-                                    if(all_solutions)
+                                // remove piece from available pieces
+                                auto available_copy = std::vector<PuzzlePiece>();
+                                for (const auto &p: available) {
+                                    if (p.get_symbol() != piece_copy.get_symbol()) {
+                                        available_copy.push_back(p);
+                                    }
+                                }
+                                auto sol = solve(Board(copy), available_copy, placed_copy);
+                                if (std::get<0>(sol)) {
+                                    visited.insert(Board(copy));
+                                    if (all_solutions) {
                                         break;
+                                    }
                                     return sol;
                                 }
                             }
+                            copy = Board(board);
                         }
-                        copy = Board(board);
                     }
                 }
                 copy = Board(board);
@@ -67,6 +77,10 @@ int main(int argc, char **argv) {
         if (std::string(argv[i]) == "-c") {
             all_solutions = true;
             std::cout << "All solutions mode";
+        }
+        if (std::string(argv[i]) == "-p") {
+            print_steps = true;
+            std::cout << "Print steps mode";
         }
     }
     std::cout << std::endl;
