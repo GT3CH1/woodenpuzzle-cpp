@@ -1,5 +1,8 @@
 #ifndef PIECES_H
 #define PIECES_H
+#include "AwkwardTPiece.h"
+#include "LongLPiece.h"
+#include "ShortTPiece.h"
 #include "puzzlepiece.h"
 #include "PlusPiece.h"
 #include "UtahPiece.h"
@@ -9,6 +12,8 @@
 #include "T2Piece.h"
 #include "LongZPiece.h"
 #include "ZPiece.h"
+#include "LPiece.h"
+#include "MPiece.h"
 using namespace puzzle;
 
 #endif

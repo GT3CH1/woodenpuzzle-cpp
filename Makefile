@@ -1,11 +1,12 @@
 PIECES := $(wildcard *Piece*.cpp)
 SOURCES := $(PIECES:.cpp=.o)
 GCC := g++
-CFLAGS := -Wall -g
+CFLAGS := -Wall -g -std=c++17
 
 $(PIECES:%.o): %.cpp
 	$(GCC) $(CFLAGS) $< -c
 all: puzzle 
+run: all
 	./puzzle
 Pieces.o: Pieces.cpp
 	$(GCC) $(CFLAGS) $< -c

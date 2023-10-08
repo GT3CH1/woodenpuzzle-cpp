@@ -21,6 +21,7 @@ namespace puzzle {
 			int get_height();
 			void print_board();
 			bool operator==(const Board &other);
+            bool operator<(const Board &other) const;
 		private:
 			static int width;
 			static int height;
