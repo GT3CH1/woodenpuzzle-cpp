@@ -31,7 +31,7 @@ char *Board::get_data() {
 }
 
 bool Board::piece_placed(char symbol) {
-    return pieces.count(symbol);
+    return pieces.find(symbol) != pieces.end();
 }
 
 bool Board::can_add_piece(int x, int y, PuzzlePiece piece) {

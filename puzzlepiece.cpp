@@ -1,6 +1,5 @@
 #include "puzzlepiece.h"
 #include <iostream>
-#include <string>
 
 using namespace puzzle;
 
@@ -12,9 +11,7 @@ PuzzlePiece::PuzzlePiece(char symbol) {
     }
 }
 
-PuzzlePiece::~PuzzlePiece() {
-    // TODO Auto-generated destructor stub
-}
+PuzzlePiece::~PuzzlePiece() = default;
 
 PuzzlePiece::PuzzlePiece(const PuzzlePiece &other) {
     this->symbol = other.symbol;
@@ -25,15 +22,15 @@ PuzzlePiece::PuzzlePiece(const PuzzlePiece &other) {
     }
 }
 
-bool PuzzlePiece::is_symmetric() {
+bool PuzzlePiece::is_symmetric() const {
     return this->symbol == 'T' || this->symbol == 'P' || this->symbol == '2' || this->symbol == 'u';
 }
 
-bool PuzzlePiece::can_rotate() {
+bool PuzzlePiece::can_rotate() const {
     return this->symbol != 'P';
 }
 
-char PuzzlePiece::get_symbol() {
+char PuzzlePiece::get_symbol() const {
     return this->symbol;
 }
 
@@ -127,4 +124,8 @@ bool PuzzlePiece::operator==(PuzzlePiece &other) {
 
 bool PuzzlePiece::operator<(const PuzzlePiece &other) const {
     return symbol < other.symbol;
+}
+
+std::size_t PuzzlePiece::operator()(const PuzzlePiece &other) const {
+    return this->symbol * 37;
 }
