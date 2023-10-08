@@ -16,10 +16,13 @@ std::tuple<bool, Board> Puzzle::solve(Board board, std::vector<PuzzlePiece> avai
         }
         auto placed_copy = std::set<PuzzlePiece>(placed);
         auto piece_copy = PuzzlePiece(piece);
-        for (int flip = 0; flip < 1; flip++) {
-            for (int rotate = 0; rotate < 4; rotate++) {
-                for (int y = 0; y < 6; y++) {
-                    for (int x = 0; x < 10; x++) {
+        for (int y = 0; y < 6; y++) {
+            for (int x = 0; x < 10; x++) {
+                for (int flip = 0; flip < 1; flip++) {
+                    for (int rotate = 0; rotate < 4; rotate++) {
+                        if(rotate == 2 && flip == 0 && x == 7 && y == 0 && piece_copy.get_symbol() == 'U') {
+                            std::cout << "here" << std::endl;
+                        }
                         if (copy.add_piece(x, y, piece_copy)) {
                             if (!copy.is_invalid()) {
                                 if (print_steps)
@@ -49,23 +52,24 @@ std::tuple<bool, Board> Puzzle::solve(Board board, std::vector<PuzzlePiece> avai
                                     return sol;
                                 }
                             }
-                            copy = Board(board);
+                        }
+                        copy = Board(board);
+                        if (piece_copy.can_rotate()) {
+                            piece_copy = piece_copy.rotate();
+                        } else {
+                            break;
                         }
                     }
+                    copy = Board(board);
+                    if (!piece_copy.is_symmetric()) {
+                        piece_copy = piece_copy.flip_horizontal();
+                    } else {
+                        break;
+                    }
                 }
-                copy = Board(board);
-                if (piece_copy.can_rotate()) {
-                    piece_copy = piece_copy.rotate();
-                } else {
-                    break;
-                }
+
             }
-            copy = Board(board);
-            if (!piece_copy.is_symmetric()) {
-                piece_copy = piece_copy.flip_horizontal();
-            } else {
-                break;
-            }
+
         }
     }
     return std::make_tuple(false, copy);
