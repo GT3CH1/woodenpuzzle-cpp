@@ -104,12 +104,10 @@ std::vector<char> PuzzlePiece::get_data() {
 }
 
 void PuzzlePiece::print() {
-    for (int i = 0; i < dimension; i++) {
-        for (int j = 0; j < dimension; j++) {
-            std::cout << this->data[i * dimension + j];
-        }
-        std::cout << std::endl;
-    }
+    std::string piece = "";
+    for(int i = 0 ; i < 25 ; i ++)
+        piece += data[i];
+    printf("%s", piece.c_str());
 }
 
 bool PuzzlePiece::operator==(PuzzlePiece &other) const {
