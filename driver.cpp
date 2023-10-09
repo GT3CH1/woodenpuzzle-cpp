@@ -34,6 +34,7 @@ void signal_handler(int sig) {
 
 int main(int argc, char **argv) {
     signal(SIGINT, signal_handler);
+    signal(SIGTERM, signal_handler);
     auto puzzle = Puzzle();
     for (int i = 0; i < argc; i++) {
         if (std::string(argv[i]) == "-h") {
