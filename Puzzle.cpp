@@ -77,6 +77,7 @@ Puzzle::solve(Board board, const std::vector<PuzzlePiece> &pieces, const std::se
                                     end = clock();
                                     copy.set_time_to_solve((double) (end - begin) / CLOCKS_PER_SEC);
                                     printf("Time elapsed: %.2f seconds\n\n", copy.get_time_to_solve());
+                                    std::cout << std::flush;
                                     begin = clock();
                                     solutions.insert(copy.hash);
                                     solutions_map.insert({copy.hash, Board(copy)});

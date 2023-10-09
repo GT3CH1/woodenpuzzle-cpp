@@ -22,6 +22,8 @@ void Driver::print_all_solutions() {
     printf("Total solutions: %lu\n", Puzzle::get_solutions().size());
     printf("Total time elapsed: %.2f seconds\n", total_time);
     printf("Average time per solution: %.2f seconds\n", total_time / solution_count);
+    // flush buffer
+    std::cout << std::flush;
 }
 
 void signal_handler(int sig) {
