@@ -14,7 +14,7 @@ all: driver
 driver: driver.cpp   Pieces.o puzzlepiece.o Puzzle.o Board.o $(SOURCES)
 	$(GCC) $(CFLAGS)  $^ -o solve_puzzle
 run: all
-	./driver
+	./solve_puzzle
 Pieces.o: Pieces.cpp
 	$(GCC) $(CFLAGS) $< -c
 %.o: %.cpp

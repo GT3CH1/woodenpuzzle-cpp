@@ -5,20 +5,16 @@ using namespace puzzle;
 
 PuzzlePiece::PuzzlePiece(char symbol) {
     this->symbol = symbol;
-    this->data = new char[25];
-    for (int i = 0; i < 25; i++) {
-        this->data[i] = '_';
-    }
+    this->data = std::vector<char>();
+    this->data.resize(25);
+    std::fill(this->data.begin(), this->data.end(), '_');
 }
 
 PuzzlePiece::~PuzzlePiece() = default;
 
 PuzzlePiece::PuzzlePiece(const PuzzlePiece &other) {
     this->symbol = other.symbol;
-    this->data = new char[25];
-    for (int i = 0; i < 25; i++) {
-        this->data[i] = other.data[i];
-    }
+    this->data = std::vector<char>(other.data);
 }
 
 bool PuzzlePiece::is_symmetric() const {
@@ -92,7 +88,6 @@ PuzzlePiece PuzzlePiece::flip_horizontal() {
     PuzzlePiece copy(*this);
     for (int i = 0; i < dimension; i++) {
         for (int j = 0; j < dimension; j++) {
-            // copy.data[i][j] = this->data[i][dimension - j - 1];
             copy.data[i * dimension + j] = this->data[i * dimension + dimension - j - 1];
         }
     }
@@ -104,8 +99,8 @@ void PuzzlePiece::set_block(int row, int col) {
     this->data[col * 5 + row] = this->symbol;
 }
 
-char *PuzzlePiece::get_data() {
-    return this->data;
+std::vector<char> PuzzlePiece::get_data() {
+    return data;
 }
 
 void PuzzlePiece::print() {

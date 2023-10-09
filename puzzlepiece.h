@@ -2,6 +2,7 @@
 #define PUZZLEPIECE_H
 
 #include <cstddef>
+#include <vector>
 
 namespace puzzle {
     class PuzzlePiece {
@@ -24,7 +25,7 @@ namespace puzzle {
 
         void set_block(int row, int col);
 
-        char *get_data();
+        std::vector<char> get_data();
 
         void print();
 
@@ -35,7 +36,7 @@ namespace puzzle {
     private:
         int dimension = 5;
         char symbol;
-        char *data;
+        std::vector<char> data;
 
         void resize_shape();
     };

@@ -1,3 +1,4 @@
 *.o
-puzzle
+solve_puzzle
+solutions.txt
 **/.idea

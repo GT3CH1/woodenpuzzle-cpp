@@ -33,11 +33,11 @@ namespace puzzle {
 
         Board &operator=(const Board &other);
 
-        char *get_data();
+        std::vector<char> get_data();
 
         std::string get_pretty_data();
 
-        double get_time_to_solve();
+        double get_time_to_solve() const;
 
         void set_time_to_solve(double time);
 
@@ -45,9 +45,9 @@ namespace puzzle {
     private:
         static int width;
         static int height;
-        char *data;
+        std::vector<char> data;
         std::set<char> pieces;
-        float time_to_solve;
+        double time_to_solve;
 
     };
 };
