@@ -5,6 +5,7 @@
 #include "driver.h"
 #include <iostream>
 #include <fstream>
+#include <csignal>
 
 void Driver::print_all_solutions() {
     // print all solutions from Puzzle::solutions_map
