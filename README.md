@@ -73,19 +73,17 @@ The program has four available options:
 
 ### Long Z Piece
 
-|  Col1   | Col2 | Col3 | Col4 | Col5 |
-|:-------:|:----:|:----:|:----:|:----:|
-|    z    |  z   |      |      |      |
-|         |  z   |  z   |  z   |  z   |
-| &nbsp;; |      |      |      |      |
+|  Col1  | Col2 | Col3 | Col4 | Col5 |
+|:------:|:----:|:----:|:----:|:----:|
+|   z    |  z   |      |      |      |
+|        |  z   |  z   |  z   |  z   |
 
 ### Short T Piece
 
-|  Col1   | Col2 | Col3 | Col4 | Col5 |
-|:-------:|:----:|:----:|:----:|:----:|
-|    t    |  t   |  t   |  t   |  t   |
-|         |  t   |      |      |      |
-| &nbsp;; |      |      |      |      |
+|  Col1  | Col2 | Col3 | Col4 | Col5 |
+|:------:|:----:|:----:|:----:|:----:|
+|   t    |  t   |  t   |  t   |  t   |
+|        |  t   |      |      |      |
 
 ### Z Piece
 
