@@ -34,10 +34,7 @@ void signal_handler(int sig) {
 
 int main(int argc, char **argv) {
     signal(SIGINT, signal_handler);
-
     auto puzzle = Puzzle();
-
-    // check if "-c" flag is present
     for (int i = 0; i < argc; i++) {
         if (std::string(argv[i]) == "-h") {
             printf("Usage: ./solve_puzzle [-c] [-p] [-w]\n");
@@ -67,26 +64,8 @@ int main(int argc, char **argv) {
             std::cout << "Writing to file `solutions.txt`\n";
         }
     }
-
-    auto pieces = std::vector<PuzzlePiece>();
-    pieces.clear();
-    pieces.push_back(UtahPiece());
-    pieces.push_back(PlusPiece());
-    pieces.push_back(TPiece());
-    pieces.push_back(MPiece());
-    pieces.push_back(LongZPiece());
-    pieces.push_back(ShortTPiece());
-    pieces.push_back(ZPiece());
-    pieces.push_back(AwkwardTPiece());
-    pieces.push_back(LPiece());
-    pieces.push_back(LongLPiece());
-    pieces.push_back(IPiece());
-    pieces.push_back(UPiece());
-    pieces.push_back(T2Piece());
-
-
     begin = clock();
-    auto sol = puzzle.solve(Board(), pieces, std::set<PuzzlePiece>());
+    auto sol = puzzle.solve();
     end = clock();
     printf("Time elapsed: %.2f\n", (double) (end - begin) / CLOCKS_PER_SEC);
     auto valid = std::get<0>(sol);

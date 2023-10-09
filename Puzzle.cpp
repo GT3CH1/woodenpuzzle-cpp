@@ -9,10 +9,36 @@ static std::set<uint> solutions;
 Puzzle::Puzzle() {
     solutions_map = std::map<uint, puzzle::Board>();
     solutions = std::set<uint>();
+    kill_switch = false;
+    all_solutions = false;
+    print_steps = false;
+    write_to_file = false;
+
+    begin = end = 0;
+}
+
+std::tuple<bool, Board> Puzzle::solve() {
+    begin = clock();
+    auto pieces = std::vector<PuzzlePiece>();
+    pieces.clear();
+    pieces.push_back(UtahPiece());
+    pieces.push_back(PlusPiece());
+    pieces.push_back(TPiece());
+    pieces.push_back(MPiece());
+    pieces.push_back(LongZPiece());
+    pieces.push_back(ShortTPiece());
+    pieces.push_back(ZPiece());
+    pieces.push_back(AwkwardTPiece());
+    pieces.push_back(LPiece());
+    pieces.push_back(LongLPiece());
+    pieces.push_back(IPiece());
+    pieces.push_back(UPiece());
+    pieces.push_back(T2Piece());
+    return solve(Board(), pieces, std::set<PuzzlePiece>());
 }
 
 std::tuple<bool, Board>
-Puzzle::solve(Board board, const std::vector<PuzzlePiece> pieces, const std::set<PuzzlePiece> &placed) {
+Puzzle::solve(Board board, const std::vector<PuzzlePiece> &pieces, const std::set<PuzzlePiece> &placed) {
     if (kill_switch) {
         return std::make_tuple(false, board);
     }
@@ -66,6 +92,7 @@ Puzzle::solve(Board board, const std::vector<PuzzlePiece> pieces, const std::set
                                     }
                                     return std::make_tuple(false, copy);
                                 }
+
                             }
                             auto sol = solve(Board(copy), pieces, placed_copy);
                             if (all_solutions) {

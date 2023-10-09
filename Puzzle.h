@@ -13,8 +13,8 @@
 namespace puzzle {
     class Puzzle {
     public:
-        std::tuple<bool, Board>
-        solve(Board board, std::vector<PuzzlePiece> pieces, const std::set<PuzzlePiece> &placed_pieces);
+
+        std::tuple<bool, Board> solve();
 
         void set_all_solutions();
 
@@ -23,8 +23,6 @@ namespace puzzle {
         void set_write_to_file();
 
         static std::map<uint, puzzle::Board> get_solutions();
-
-        static std::vector<PuzzlePiece> pieces;
 
         clock_t begin;
         clock_t end;
@@ -37,6 +35,8 @@ namespace puzzle {
         bool all_solutions = false;
         bool print_steps = false;
         bool write_to_file = false;
+        std::tuple<bool, Board>
+        solve(Board board, const std::vector<PuzzlePiece>& pieces, const std::set<PuzzlePiece> &placed_pieces);
     };
 }
 static bool kill_switch = false;
