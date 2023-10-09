@@ -5,29 +5,39 @@ int Board::width = 10;
 int Board::height = 6;
 
 Board::Board() {
-    for (int i = 0; i < this->height; i++) {
-        for (int j = 0; j < this->width; j++) {
-            this->data[i * 10 + j] = '_';
-        }
+    this->hash = 0;
+    data = new char[60];
+    for (int i = 0; i < 60; i++) {
+        data[i] = '_';
     }
     pieces = std::set<char>();
+    pieces.clear();
 }
+
 
 Board::Board(const Board &other) {
-    for (int i = 0; i < this->height; i++) {
-        for (int j = 0; j < this->width; j++) {
-            this->data[i * 10 + j] = other.data[i * 10 + j];
-        }
+    hash = other.hash;
+    data = new char[60];
+    time_to_solve = other.time_to_solve;
+    // copy data
+    for (int i = 0; i < 60; i++) {
+        data[i] = other.data[i];
     }
-    this->pieces = std::set<char>(other.pieces);
-}
-
-char *Board::get_data() {
-    return this->data;
+    pieces.clear();
+    pieces = std::set<char>(other.pieces);
 }
 
 bool Board::piece_placed(char symbol) {
     return pieces.find(symbol) != pieces.end();
+}
+
+Board::~Board() {
+    if (data)
+        delete[] data;
+}
+
+char *Board::get_data() {
+    return this->data;
 }
 
 bool Board::can_add_piece(int x, int y, PuzzlePiece piece) {
@@ -60,6 +70,7 @@ bool Board::add_piece(int x, int y, PuzzlePiece piece) {
                 this->data[(y + i) * 10 + (x + j)] = piece.get_symbol();
         }
     }
+    this->hash += piece.get_symbol() * (x + y) * 37;
     this->pieces.insert(piece.get_symbol());
     return true;
 }
@@ -74,7 +85,8 @@ bool Board::is_invalid() {
                 if (!found_piece)
                     found_piece = true;
                 continue;
-            } else if (curr_data == '_' && found_piece)
+            }
+            if (curr_data == '_' && found_piece)
                 return true;
             else if (x == 0 && y == 0) {
                 if (this->data[1] != '_' && this->data[10] != '_') {
@@ -87,7 +99,7 @@ bool Board::is_invalid() {
                 if (this->data[1] != '_' && this->data[10] != '_')
                     return true;
             } else if (x == 9 && y == 5) {
-                if (this->data[58] != '_' && this->data[49] != '_' )
+                if (this->data[58] != '_' && this->data[49] != '_')
                     return true;
             }
                 // if 1<=x<9 and y == 0
@@ -131,37 +143,33 @@ bool Board::is_invalid() {
 
 void Board::print_board() {
     // top border
+    std::cout << get_pretty_data() << std::endl;
+}
+
+std::string Board::get_pretty_data() {
     std::string top_border = "+";
-    for (int i = 0; i < this->width; i++) {
+    for (int i = 0; i < puzzle::Board::width; i++) {
         top_border += "-";
     }
     top_border += "+";
-    std::cout << top_border << std::endl;
-    for (int i = 0; i < this->height; i++) {
-        std::string row = "|";
-        for (int j = 0; j < this->width; j++) {
+    std::string row = "";
+    for (int i = 0; i < puzzle::Board::height; i++) {
+        row += "|";
+        for (int j = 0; j < puzzle::Board::width; j++) {
             row += this->data[i * 10 + j];
         }
-        row += "|";
-        std::cout << row << std::endl;
+        row += "|\n";
     }
-    std::cout << top_border << std::endl;
-
+    std::string pretty_data = top_border + "\n" + row + top_border;
+    return pretty_data;
 }
 
-bool Board::operator==(const Board &other) {
-    for (int i = 0; i < this->height; i++) {
-        for (int j = 0; j < this->width; j++) {
-            if (this->data[i * 10 + j] != other.data[i * 10 + j]) {
-                return false;
-            }
-        }
-    }
-    return true;
+bool Board::operator==(const Board &other) const {
+    return this->hash == other.hash;
 }
 
 bool Board::operator<(const Board &other) const {
-    return this->pieces.size() < other.pieces.size();
+    return this->hash < other.hash;
 }
 
 bool Board::is_solved() {
@@ -173,4 +181,21 @@ bool Board::is_solved() {
         }
     }
     return true;
+}
+
+Board &Board::operator=(const Board &other) {
+    this->hash = other.hash;
+    for (int i = 0; i < 60; i++) {
+        this->data[i] = other.data[i];
+    }
+    this->pieces = std::set<char>(other.pieces);
+    return *this;
+}
+
+double Board::get_time_to_solve() {
+    return time_to_solve;
+}
+
+void Board::set_time_to_solve(double time) {
+    this->time_to_solve = time;
 }

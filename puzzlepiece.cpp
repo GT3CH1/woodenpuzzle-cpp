@@ -5,9 +5,9 @@ using namespace puzzle;
 
 PuzzlePiece::PuzzlePiece(char symbol) {
     this->symbol = symbol;
-    for (int i = 0; i < dimension; i++) {
-        for (int j = 0; j < dimension; j++)
-            this->data[i * dimension + j] = '_';
+    this->data = new char[25];
+    for (int i = 0; i < 25; i++) {
+        this->data[i] = '_';
     }
 }
 
@@ -15,15 +15,15 @@ PuzzlePiece::~PuzzlePiece() = default;
 
 PuzzlePiece::PuzzlePiece(const PuzzlePiece &other) {
     this->symbol = other.symbol;
-    for (int i = 0; i < dimension; i++) {
-        for (int j = 0; j < dimension; j++) {
-            this->data[i * dimension + j] = other.data[i * dimension + j];
-        }
+    this->data = new char[25];
+    for (int i = 0; i < 25; i++) {
+        this->data[i] = other.data[i];
     }
 }
 
 bool PuzzlePiece::is_symmetric() const {
-    return this->symbol == 'T' || this->symbol == 'P' || this->symbol == '2' || this->symbol == 'u';
+    return this->symbol == 'T' || this->symbol == 'P' || this->symbol == '2' || this->symbol == 'u' ||
+           this->symbol == 'B';
 }
 
 bool PuzzlePiece::can_rotate() const {
@@ -50,7 +50,6 @@ void PuzzlePiece::resize_shape() {
     bool can_move = true;
     while (can_move) {
         for (int i = 0; i < dimension; i++) {
-            bool row_empty = true;
             for (int j = 0; j < dimension; j++) {
                 if (this->data[i * dimension + j] != '_') {
                     can_move = false;
@@ -118,14 +117,10 @@ void PuzzlePiece::print() {
     }
 }
 
-bool PuzzlePiece::operator==(PuzzlePiece &other) {
+bool PuzzlePiece::operator==(PuzzlePiece &other) const {
     return this->get_symbol() == other.get_symbol();
 }
 
 bool PuzzlePiece::operator<(const PuzzlePiece &other) const {
     return symbol < other.symbol;
-}
-
-std::size_t PuzzlePiece::operator()(const PuzzlePiece &other) const {
-    return this->symbol * 37;
 }

@@ -6,17 +6,17 @@
 namespace puzzle {
     class PuzzlePiece {
     public:
-        PuzzlePiece(char symbol);
+        explicit PuzzlePiece(char symbol);
 
         PuzzlePiece(const PuzzlePiece &other);
 
         ~PuzzlePiece();
 
-        bool is_symmetric() const;
+        [[nodiscard]] bool is_symmetric() const;
 
-        bool can_rotate() const;
+        [[nodiscard]] bool can_rotate() const;
 
-        char get_symbol() const;
+        [[nodiscard]] char get_symbol() const;
 
         PuzzlePiece rotate();
 
@@ -28,16 +28,14 @@ namespace puzzle {
 
         void print();
 
-        bool operator==(PuzzlePiece &other);
+        bool operator==(PuzzlePiece &other) const;
 
         bool operator<(const PuzzlePiece &other) const;
-
-        size_t operator()(const PuzzlePiece &other) const;
 
     private:
         int dimension = 5;
         char symbol;
-        char data[25];
+        char *data;
 
         void resize_shape();
     };

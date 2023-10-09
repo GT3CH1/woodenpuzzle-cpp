@@ -1,121 +1,117 @@
 #include "Puzzle.h"
+#include <map>
 
 using namespace puzzle;
 
-auto visited = std::set<Board>();
+std::map<uint, puzzle::Board> solutions_map;
+static std::set<uint> solutions;
 
-bool all_solutions = false;
-bool print_steps = false;
+Puzzle::Puzzle() {
+    solutions_map = std::map<uint, puzzle::Board>();
+    solutions = std::set<uint>();
+}
 
-std::tuple<bool, Board> Puzzle::solve(Board board, std::vector<PuzzlePiece> available, std::set<PuzzlePiece> placed) {
-    Board copy = Board(board);
+std::tuple<bool, Board>
+Puzzle::solve(Board board, const std::vector<PuzzlePiece> pieces, const std::set<PuzzlePiece> &placed) {
+    if (kill_switch) {
+        return std::make_tuple(false, board);
+    }
     // iterate over all available Pieces
-    for (const auto &piece: available) {
-        if (placed.find(piece) != placed.end() && copy.piece_placed(piece.get_symbol())) {
+    for (const auto &piece: pieces) {
+        if (board.piece_placed(piece.get_symbol())) {
             continue;
         }
         auto placed_copy = std::set<PuzzlePiece>(placed);
         auto piece_copy = PuzzlePiece(piece);
-        for (int y = 0; y < 6; y++) {
-            for (int x = 0; x < 10; x++) {
-                for (int flip = 0; flip < 1; flip++) {
-                    for (int rotate = 0; rotate < 4; rotate++) {
+        if (solutions.find(board.hash) != solutions.end()) {
+            continue;
+        }
+        Board copy = Board(board);
+        for (int flip = 0; flip < 1; flip++) {
+            for (int rotate = 0; rotate < 4; rotate++) {
+                for (int y = 0; y < 6; y++) {
+                    for (int x = 0; x < 10; x++) {
                         if (copy.add_piece(x, y, piece_copy)) {
-                            if (!copy.is_invalid()) {
-                                placed_copy.insert(piece_copy);
-                                if (print_steps) {
+                            if (copy.is_invalid()) {
+                                copy = Board(board);
+                                continue;
+                            }
+                            placed_copy.insert(piece_copy);
+                            if (print_steps) {
+                                copy.print_board();
+                            }
+                            if (copy.is_solved()) {
+                                if (!solutions.empty() && solutions.find(copy.hash) != solutions.end())
+                                    break;
+                                if (!all_solutions) {
+                                    return std::make_tuple(true, copy);
+                                } else {
                                     copy.print_board();
-                                }
-                                if (copy.is_solved()) {
-                                    if (visited.find(Board(copy)) != visited.end()) {
-                                        continue;
+                                    printf("Solution hash: %u\n", copy.hash);
+                                    end = clock();
+                                    copy.set_time_to_solve((double) (end - begin) / CLOCKS_PER_SEC);
+                                    printf("Time elapsed: %.2f seconds\n\n", copy.get_time_to_solve());
+                                    begin = clock();
+                                    solutions.insert(copy.hash);
+                                    solutions_map.insert({copy.hash, Board(copy)});
+                                    if (write_to_file && !kill_switch) {
+                                        std::ofstream myfile;
+                                        myfile.open("solutions.txt", std::ios::app);
+                                        myfile << copy.get_pretty_data() << "\n";
+                                        myfile << "Solution hash: " << copy.hash << "\n";
+                                        myfile << "Time elapsed: " << copy.get_time_to_solve()
+                                               << " seconds\n";
+                                        myfile << "\n";
+                                        myfile.close();
                                     }
-                                    copy.print_board();
-                                    if (!all_solutions) {
-                                        return std::make_tuple(true, copy);
-                                    } else {
-                                        visited.insert(Board(copy));
-                                    }
-                                }
-                                // remove piece from available pieces
-                                auto available_copy = std::vector<PuzzlePiece>();
-                                for (const auto &p: available) {
-                                    if (p.get_symbol() != piece_copy.get_symbol()) {
-                                        available_copy.push_back(p);
-                                    }
-                                }
-                                auto sol = solve(Board(copy), available_copy, placed_copy);
-                                if (std::get<0>(sol)) {
-                                    visited.insert(Board(copy));
-                                    return sol;
+                                    return std::make_tuple(false, copy);
                                 }
                             }
+                            auto sol = solve(Board(copy), pieces, placed_copy);
+                            if (all_solutions) {
+                                copy = Board(board);
+                                break;
+                            }
+                            if (std::get<0>(sol)) {
+                                return sol;
+                            }
                         }
-                        copy = Board(board);
-                        if (piece_copy.can_rotate()) {
-                            piece_copy = piece_copy.rotate();
-                        } else {
-                            break;
-                        }
-                    }
-                    copy = Board(board);
-                    if (!piece_copy.is_symmetric()) {
-                        piece_copy = piece_copy.flip_horizontal();
-                    } else {
-                        break;
                     }
                 }
-
+                copy = Board(board);
+                if (piece_copy.can_rotate()) {
+                    piece_copy = piece_copy.rotate();
+                } else {
+                    break;
+                }
             }
-
+            copy = Board(board);
+            if (!piece_copy.is_symmetric()) {
+                piece_copy = piece_copy.flip_horizontal();
+            } else {
+                break;
+            }
         }
     }
-    return std::make_tuple(false, copy);
+    return std::make_tuple(false, board);
 }
 
-int main(int argc, char **argv) {
-    // check if "-c" flag is present
-    for (int i = 0; i < argc; i++) {
-        if (std::string(argv[i]) == "-c") {
-            all_solutions = true;
-            std::cout << "All solutions mode";
-        }
-        if (std::string(argv[i]) == "-p") {
-            print_steps = true;
-            std::cout << "Print steps mode";
-        }
-    }
-    std::cout << std::endl;
-    std::vector<PuzzlePiece> pieces;
-    auto placed = std::set<PuzzlePiece>();
-    pieces.push_back(UtahPiece());
-    pieces.push_back(PlusPiece());
-    pieces.push_back(TPiece());
-    pieces.push_back(MPiece());
-    pieces.push_back(LongZPiece());
-    pieces.push_back(ShortTPiece());
-    pieces.push_back(ZPiece());
-    pieces.push_back(AwkwardTPiece());
-    pieces.push_back(LPiece());
-    pieces.push_back(LongLPiece());
-    pieces.push_back(IPiece());
-    pieces.push_back(UPiece());
-    pieces.push_back(T2Piece());
-    for (auto piece: pieces) {
-        std::cout << "Piece: " << piece.get_symbol() << std::endl;
-        piece.print();
-    }
-    //    Board board = Board();
-    //    board.add_piece(7, 0, UtahPiece().rotate().rotate().rotate());
-    //    board.print_board();
-    //    std::cout << board.is_invalid() << std::endl;
-    auto sol = (Puzzle::solve(Board(), pieces, placed));
-    auto valid = std::get<0>(sol);
-    auto new_board = std::get<1>(sol);
-    new_board.print_board();
-    if (valid) {
-        std::cout << "Solved!" << std::endl;
-    } else {
-        std::cout << "Not Solved!" << std::endl;
-    }
+std::map<uint, puzzle::Board> Puzzle::get_solutions() {
+    return solutions_map;
+}
+
+void Puzzle::set_all_solutions() {
+    this->all_solutions = true;
+}
+
+void Puzzle::set_print_steps() {
+    print_steps = true;
+}
+
+void Puzzle::set_write_to_file() {
+    write_to_file = true;
+}
+
+void Puzzle::kill() {
+    kill_switch = true;
 }

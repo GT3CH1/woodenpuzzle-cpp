@@ -3,16 +3,21 @@ SOURCES := $(PIECES:.cpp=.o)
 GCC := g++
 CFLAGS := -Wall -O3 -std=c++17
 
+ifdef DEBUG
+CFLAGS = -Wall -g -std=c++17
+
+endif
+
 $(PIECES:%.o): %.cpp
 	$(GCC) $(CFLAGS) $< -c
-all: puzzle 
+all: driver
+driver: driver.cpp   Pieces.o puzzlepiece.o Puzzle.o Board.o $(SOURCES)
+	$(GCC) $(CFLAGS)  $^ -o solve_puzzle
 run: all
-	./puzzle
+	./driver
 Pieces.o: Pieces.cpp
 	$(GCC) $(CFLAGS) $< -c
 %.o: %.cpp
 	$(GCC) $(CFLAGS) $< -c
-puzzle: puzzlepiece.o Board.o Puzzle.o Pieces.o $(SOURCES)
-	$(GCC) $(CFLAGS) -o puzzle $^
 clean:
-	rm -f *.o puzzle
+	rm -f *.o solve_puzzle solutions.txt
