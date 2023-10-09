@@ -1,23 +1,31 @@
-PIECES := $(wildcard *Piece*.cpp)
-SOURCES := $(PIECES:.cpp=.o)
+SRC_DIR := src
+OBJ_DIR := obj
+BIN_DIR := bin
+INCLUDES := include/
+
+SRC := $(wildcard $(SRC_DIR)/*.cpp)
+OBJ := $(SRC:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
 GCC := g++
 CFLAGS := -Wall -O3 -std=c++17
 
 ifdef DEBUG
 CFLAGS = -Wall -g -std=c++17
-
 endif
 
+all: dir puzzle_solver
+
 $(PIECES:%.o): %.cpp
-	$(GCC) $(CFLAGS) $< -c
-all: driver
-driver: driver.cpp   Pieces.o puzzlepiece.o Puzzle.o Board.o $(SOURCES)
-	$(GCC) $(CFLAGS)  $^ -o solve_puzzle
+	$(GCC) $(CFLAGS) $(SRC_DIR)$< -c -I$(INCLUDES)
+dir:
+	mkdir -p $(OBJ_DIR)
+	mkdir -p $(BIN_DIR)
+puzzle_solver: $(OBJ)
+	$(GCC) $(CFLAGS)  $^ -o solve_puzzle -I $(INCLUDES) -o $(BIN_DIR)/solve_puzzle
 run: all
-	./solve_puzzle
-Pieces.o: Pieces.cpp
-	$(GCC) $(CFLAGS) $< -c
-%.o: %.cpp
-	$(GCC) $(CFLAGS) $< -c
+	./puzzle_solver
+Pieces.o: $(SRC_DIR)/Pieces.cpp
+	$(GCC) $(CFLAGS) $< -c -I $(INCLUDES)
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
+	$(GCC) $(CFLAGS) $< -c -I $(INCLUDES) -o $@
 clean:
-	rm -f *.o solve_puzzle solutions.txt
+	rm -rf $(OBJ_DIR) $(BIN_DIR)
