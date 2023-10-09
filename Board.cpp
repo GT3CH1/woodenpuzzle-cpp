@@ -67,7 +67,7 @@ bool Board::add_piece(int x, int y, PuzzlePiece piece) {
                 this->data[(y + i) * 10 + (x + j)] = piece.get_symbol();
         }
     }
-    this->hash += piece.get_symbol() * 37 * (x ^ 3 + y ^ 3) * 127;
+    this->hash += piece.get_symbol() * 37 * ((x ^ 3) + (y ^ 3)) * 127;
     this->pieces.insert(piece.get_symbol());
     return true;
 }

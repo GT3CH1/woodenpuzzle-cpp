@@ -39,5 +39,6 @@ namespace puzzle {
         solve(Board board, const std::vector<PuzzlePiece>& pieces, const std::set<PuzzlePiece> &placed_pieces);
     };
 }
+[[maybe_unused]]
 static bool kill_switch = false;
 #endif
