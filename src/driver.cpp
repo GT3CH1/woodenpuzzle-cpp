@@ -58,7 +58,6 @@ int main(int argc, char **argv) {
             std::cout << "Print steps mode\n";
         }
         if (std::string(argv[i]) == "-w") {
-            write_to_file = true;
             puzzle.set_write_to_file();
             // clear file
             std::ofstream myfile;
