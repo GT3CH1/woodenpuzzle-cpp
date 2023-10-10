@@ -139,7 +139,7 @@ namespace puzzle {
         std::vector<char> data;
 
         /**
-         * The pieces that have been placed on the board.
+         * The available_pieces that have been placed on the board.
          */
         std::set<char> pieces;
 

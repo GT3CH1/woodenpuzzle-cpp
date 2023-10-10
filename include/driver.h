@@ -28,4 +28,5 @@ static clock_t begin;
  * The end time of the program.
  */
 static clock_t end;
+
 #endif //WOODENPUZZLE_CPP_DRIVER_H

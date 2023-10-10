@@ -61,10 +61,14 @@ namespace puzzle {
          */
         Puzzle();
 
+        Puzzle(std::vector<PuzzlePiece> &pieces);
+
         /**
          * Enables the kill switch to stop the algorithm in the event of a signal.
          */
         static void kill();
+
+        void set_thread_id(int id);
 
     private:
         /**
@@ -82,15 +86,19 @@ namespace puzzle {
          */
         bool write_to_file = false;
 
+        int thread_id = -1;
+
+        std::vector<PuzzlePiece> available_pieces;
+
         /**
          * Recursive function used to solve the puzzle.
          * @param board The current board state.
-         * @param pieces The current list of pieces that are available to be placed.
-         * @param placed_pieces The current list of pieces that have been placed.
+         * @param pieces The current list of available_pieces that are available to be placed.
+         * @param placed_pieces The current list of available_pieces that have been placed.
          * @return
          */
         std::tuple<bool, Board>
-        solve(Board board, const std::vector<PuzzlePiece>& pieces, const std::set<PuzzlePiece> &placed_pieces);
+        solve(Board board, const std::vector<PuzzlePiece> &pieces, const std::set<PuzzlePiece> &placed_pieces);
     };
 }
 [[maybe_unused]]
@@ -98,4 +106,6 @@ namespace puzzle {
  * The kill switch used to stop the algorithm in the event of a signal.
  */
 static bool kill_switch = false;
+
+
 #endif

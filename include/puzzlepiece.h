@@ -13,7 +13,7 @@ namespace puzzle {
     public:
         /**
          * @brief Construct a new Puzzle Piece object.
-         * All puzzle pieces are assumed to fit within a 5x5 grid. The grid is initialized with the "empty" block,
+         * All puzzle available_pieces are assumed to fit within a 5x5 grid. The grid is initialized with the "empty" block,
          * which is represented by the underscore character.
          * @param symbol The symbol used to represent the piece.
          */
@@ -78,7 +78,7 @@ namespace puzzle {
         /**
          * Checks whether the piece is equal to another piece by comparing their symbols.
          * @param other The other piece to compare to.
-         * @return True if the pieces are equal, false otherwise.
+         * @return True if the available_pieces are equal, false otherwise.
          */
         bool operator==(PuzzlePiece &other) const;
 

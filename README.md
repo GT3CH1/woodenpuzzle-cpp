@@ -3,10 +3,10 @@
 ### A brute force algorithm to solve a 10x6 wooden puzzle
 
 This program is a brute-force algorithm to solve a 10x6 puzzle that contains numerous
-pieces. Each piece is a different shape, but is limited to a dimension no bigger than 5x5.
+available_pieces. Each piece is a different shape, but is limited to a dimension no bigger than 5x5.
 
-The puzzle is solved once all holes or gaps on the board are filled with pieces. A piece cannot go
-over the boundary of the board, and no two pieces can overlap.
+The puzzle is solved once all holes or gaps on the board are filled with available_pieces. A piece cannot go
+over the boundary of the board, and no two available_pieces can overlap.
 
 ---
 
@@ -29,7 +29,7 @@ The program has four available options:
 
 ---
 
-## The pieces
+## The available_pieces
 
 ### Utah
 

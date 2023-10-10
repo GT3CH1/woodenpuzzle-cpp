@@ -5,6 +5,7 @@ using namespace puzzle;
 
 std::map<uint, puzzle::Board> solutions_map;
 static std::set<uint> solutions;
+static pthread_mutex_t lock = PTHREAD_MUTEX_INITIALIZER;
 
 Puzzle::Puzzle() {
     solutions_map = std::map<uint, puzzle::Board>();
@@ -19,22 +20,10 @@ Puzzle::Puzzle() {
 
 std::tuple<bool, Board> Puzzle::solve() {
     begin = clock();
-    auto pieces = std::vector<PuzzlePiece>();
-    pieces.clear();
-    pieces.push_back(UtahPiece());
-    pieces.push_back(PlusPiece());
-    pieces.push_back(TPiece());
-    pieces.push_back(MPiece());
-    pieces.push_back(LongZPiece());
-    pieces.push_back(ShortTPiece());
-    pieces.push_back(ZPiece());
-    pieces.push_back(AwkwardTPiece());
-    pieces.push_back(LPiece());
-    pieces.push_back(LongLPiece());
-    pieces.push_back(IPiece());
-    pieces.push_back(UPiece());
-    pieces.push_back(T2Piece());
-    return solve(Board(), pieces, std::set<PuzzlePiece>());
+    pthread_mutex_lock(&lock);
+    printf("Thread #%d started\n", thread_id);
+    pthread_mutex_unlock(&lock);
+    return solve(Board(), available_pieces, std::set<PuzzlePiece>());
 }
 
 std::tuple<bool, Board>
@@ -58,10 +47,15 @@ Puzzle::solve(Board board, const std::vector<PuzzlePiece> &pieces, const std::se
         int x = 0;
         int y = 0;
         while (flip < 1 || rotate < 4 || y < 6 || x < 10) {
+            if (print_steps) {
+                pthread_mutex_lock(&lock);
+                printf("Thread #%d\n", thread_id);
+                copy.print_board();
+                pthread_mutex_unlock(&lock);
+            }
             if (copy.add_piece(x, y, piece_copy) && !copy.is_invalid()) {
                 placed_copy.insert(piece_copy);
-                if (print_steps)
-                    copy.print_board();
+
                 if (!copy.is_solved()) {
                     auto sol = solve(Board(copy), pieces, placed_copy);
                     if (!all_solutions && std::get<0>(sol)) {
@@ -73,14 +67,26 @@ Puzzle::solve(Board board, const std::vector<PuzzlePiece> &pieces, const std::se
                 if (!solutions.empty() && solutions.find(copy.hash) != solutions.end())
                     break;
                 if (!all_solutions) {
+                    pthread_mutex_lock(&lock);
+                    printf("Thread #%d\n", thread_id);
+                    printf("Solution hash: %u\n", copy.hash);
+                    copy.print_board();
+                    printf("Time elapsed: %.2f seconds\n\n", copy.get_time_to_solve());
+                    pthread_mutex_unlock(&lock);
                     return std::make_tuple(true, copy);
+
                 }
+                pthread_mutex_lock(&lock);
+
                 copy.print_board();
+                printf("Thread #%d\n", thread_id);
                 printf("Solution hash: %u\n", copy.hash);
                 end = clock();
                 copy.set_time_to_solve((double) (end - begin) / CLOCKS_PER_SEC);
                 printf("Time elapsed: %.2f seconds\n\n", copy.get_time_to_solve());
                 std::cout << std::flush;
+
+                pthread_mutex_unlock(&lock);
                 begin = clock();
                 solutions.insert(copy.hash);
                 solutions_map.insert({copy.hash, Board(copy)});
@@ -143,4 +149,22 @@ void Puzzle::set_write_to_file() {
 
 void Puzzle::kill() {
     kill_switch = true;
+}
+
+Puzzle::Puzzle(std::vector<PuzzlePiece> &pieces) {
+    solutions_map = std::map<uint, puzzle::Board>();
+    solutions = std::set<uint>();
+    kill_switch = false;
+    all_solutions = false;
+    print_steps = false;
+    write_to_file = false;
+
+    begin = end = 0;
+    available_pieces = pieces;
+    // initialize mutex
+    pthread_mutex_init(&lock, nullptr);
+}
+
+void Puzzle::set_thread_id(int id) {
+    thread_id = id;
 }
