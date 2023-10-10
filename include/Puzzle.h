@@ -44,7 +44,7 @@ namespace puzzle {
          * The map of solutions found by the algorithm.
          * @return A map containing any solutions found by the algorithm.
          */
-        static std::map<uint, puzzle::Board> get_solutions();
+        static std::map <uint, puzzle::Board> get_solutions();
 
         /**
          * The start time of the recursive call.
@@ -61,14 +61,14 @@ namespace puzzle {
          */
         Puzzle();
 
-        Puzzle(std::vector<PuzzlePiece> &pieces);
+        Puzzle(std::vector <PuzzlePiece> &pieces);
 
         /**
          * Enables the kill switch to stop the algorithm in the event of a signal.
          */
         static void kill();
 
-        void set_thread_id(int id);
+        void set_thread_id(pthread_t id);
 
     private:
         /**
@@ -86,9 +86,9 @@ namespace puzzle {
          */
         bool write_to_file = false;
 
-        int thread_id = -1;
+        pthread_t thread_id = -1;
 
-        std::vector<PuzzlePiece> available_pieces;
+        std::vector <PuzzlePiece> available_pieces;
 
         /**
          * Recursive function used to solve the puzzle.
@@ -98,7 +98,7 @@ namespace puzzle {
          * @return
          */
         std::tuple<bool, Board>
-        solve(Board board, const std::vector<PuzzlePiece> &pieces, const std::set<PuzzlePiece> &placed_pieces);
+        solve(Board board, const std::vector <PuzzlePiece> &pieces, const std::set <PuzzlePiece> &placed_pieces);
     };
 }
 [[maybe_unused]]
