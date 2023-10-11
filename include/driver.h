@@ -5,6 +5,7 @@
 #include <vector>
 #include "Board.h"
 #include "Puzzle.h"
+
 using namespace puzzle;
 namespace puzzle {
     /**
@@ -28,5 +29,6 @@ static clock_t begin;
  * The end time of the program.
  */
 static clock_t end;
-
+static int num_threads = 1;
+static int start_idx = 0;
 #endif //WOODENPUZZLE_CPP_DRIVER_H
