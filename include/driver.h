@@ -24,6 +24,8 @@ namespace puzzle {
  */
 static clock_t begin;
 
+static int num_threads = 4;
+
 /**
  * The end time of the program.
  */

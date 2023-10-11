@@ -122,6 +122,10 @@ namespace puzzle {
          * The hash value of this board.
          */
         uint hash;
+
+        void set_thread_id(pthread_t id);
+
+        pthread_t get_thread_id();
     private:
         /**
          * The width of the board.
@@ -147,6 +151,8 @@ namespace puzzle {
          * The number of seconds it took to solve this board.
          */
         double time_to_solve;
+
+        pthread_t thread_id = -1;
     };
 };
 

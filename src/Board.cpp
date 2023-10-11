@@ -200,5 +200,13 @@ double Board::get_time_to_solve() const {
 }
 
 void Board::set_time_to_solve(double time) {
-    this->time_to_solve = time;
+    this->time_to_solve = time / 4;
+}
+
+void Board::set_thread_id(pthread_t id) {
+    this->thread_id = id;
+}
+
+pthread_t Board::get_thread_id() {
+    return this->thread_id;
 }

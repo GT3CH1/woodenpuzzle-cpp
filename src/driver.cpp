@@ -18,20 +18,20 @@ bool print_steps = false;
 long start_time = 0;
 long end_time = 0;
 std::vector <PuzzlePiece> pieces_list = std::vector<PuzzlePiece>({
-                                                                         UtahPiece(),
-                                                                         PlusPiece(),
-                                                                         TPiece(),
-                                                                         MPiece(),
-                                                                         LongZPiece(),
-                                                                         ShortTPiece(),
-                                                                         ZPiece(),
-                                                                         AwkwardTPiece(),
-                                                                         LPiece(),
-                                                                         LongLPiece(),
-                                                                         IPiece(),
-                                                                         UPiece(),
-                                                                         T2Piece()
-                                                                 });
+    UtahPiece(),
+    PlusPiece(),
+    TPiece(),
+    MPiece(),
+    LongZPiece(),
+    ShortTPiece(),
+    ZPiece(),
+    AwkwardTPiece(),
+    LPiece(),
+    LongLPiece(),
+    IPiece(),
+    UPiece(),
+    T2Piece()
+});
 
 void multithread_driver(std::vector <PuzzlePiece> &pieces) {
     auto p = Puzzle(pieces);
@@ -57,7 +57,7 @@ void Driver::print_all_solutions() {
         solution_count++;
     }
     printf("Total solutions: %lu\n", Puzzle::get_solutions().size());
-    printf("Total time elapsed: %.2f seconds\n", total_time);
+    printf("Total time elapsed: %.2f seconds\n", total_time / num_threads);
     printf("Average time per solution: %.2f seconds\n", total_time / solution_count);
     // flush buffer
     std::cout << std::flush;
@@ -147,10 +147,11 @@ int main(int argc, char **argv) {
             write_mode = true;
         }
     }
+    num_threads = 1;
     begin = clock();
     auto sol = puzzle.solve();
     end = clock();
-    printf("Time elapsed: %.2f\n", (double) (end - begin) / CLOCKS_PER_SEC);
+    printf("Time elapsed: %.2f\n", (double) (end - begin) / CLOCKS_PER_SEC / num_threads);
     auto valid = std::get<0>(sol);
     auto new_board = std::get<1>(sol);
     new_board.print_board();
