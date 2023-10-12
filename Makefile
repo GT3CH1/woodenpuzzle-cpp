@@ -5,7 +5,7 @@ INCLUDES := include/
 
 SRC := $(wildcard $(SRC_DIR)/*.cpp)
 OBJ := $(SRC:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
-GCC := g++
+GCC := clang++
 CFLAGS := -Wall -O3 -std=c++17
 
 ifdef DEBUG

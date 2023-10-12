@@ -4,3 +4,4 @@ solutions.txt
 **/.idea
 obj
 bin
+.cache
