@@ -152,7 +152,8 @@ std::string Board::get_pretty_data() {
     std::string time_elapsed = std::to_string((int(time_to_solve * 100)) / 100.0);
     // remove trailing zeros
     time_elapsed.erase(time_elapsed.find_last_not_of('0') + 1, std::string::npos);
-    pretty_data += "Time elapsed: " + time_elapsed + " seconds\n";
+    if(time_elapsed != "0.")
+        pretty_data += "Time elapsed: " + time_elapsed + " seconds\n";
     std::string top_border = "+";
     for (int i = 0; i < puzzle::Board::width; i++) {
         top_border += "-";

@@ -61,21 +61,14 @@ Puzzle::solve(Board board, const std::vector<PuzzlePiece> &pieces, const std::se
                     break;
                 }
                 pthread_mutex_unlock(&lock);
-                if (!all_solutions) {
-                    pthread_mutex_lock(&lock);
-                    printf("Thread #%i\n", thread_id);
-                    printf("Solution hash: %u\n", copy.hash);
-                    copy.print_board();
-                    printf("Time elapsed: %.2f seconds\n\n", copy.get_time_to_solve());
-                    pthread_mutex_unlock(&lock);
+                if (!all_solutions)
                     return std::make_tuple(true, copy);
-
-                }
                 pthread_mutex_lock(&lock);
                 end = std::chrono::system_clock::now();
                 auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() / 1000.0;
                 copy.set_time_to_solve(elapsed);
-                copy.print_board();
+		if (print_steps)
+			copy.print_board();
                 std::cout << std::flush;
                 begin = std::chrono::system_clock::now();
                 solutions.insert(copy.hash);
@@ -86,11 +79,6 @@ Puzzle::solve(Board board, const std::vector<PuzzlePiece> &pieces, const std::se
                     std::ofstream myfile;
                     myfile.open("solutions.txt", std::ios::app);
                     myfile << copy.get_pretty_data() << "\n";
-                    myfile << "Thread #" << thread_id << "\n";
-                    myfile << "Solution hash: " << copy.hash << "\n";
-                    myfile << "Time elapsed: " << copy.get_time_to_solve()
-                           << " seconds\n";
-                    myfile << "\n";
                     myfile.close();
                     pthread_mutex_unlock(&lock);
                 }

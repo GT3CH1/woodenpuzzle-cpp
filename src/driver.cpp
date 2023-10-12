@@ -38,13 +38,17 @@ std::vector<PuzzlePiece> pieces_list = std::vector<PuzzlePiece>(
                 T2Piece()
         });
 
-void multithread_driver(thread_args *args) {
-    auto p = Puzzle(args->pieces);
-    p.set_thread_id(args->thread_id);
+void multithread_driver(void *args) {
+    auto pieces = ((struct thread_args *) args)->pieces;
+    auto thread_id = ((struct thread_args *) args)->thread_id;
+    auto p = Puzzle(pieces);
+    p.set_thread_id(thread_id);
     if (all_solutions)
         p.set_all_solutions();
     if (write_mode)
         p.set_write_to_file();
+    if(print_steps)
+        p.set_print_steps();
     p.solve();
 }
 
@@ -70,16 +74,15 @@ void Driver::print_all_solutions() {
     for (int i = 0; i < num_threads; i++) {
         printf("Thread #%d: %d\n", i, solution_per_thread[i]);
     }
-    // flush buffer
-    std::cout << std::flush;
 }
 
 void signal_handler(int sig) {
     Puzzle::kill();
-    for (unsigned long thread: threads) {
+    for (pthread_t thread: threads) {
         pthread_join(thread, nullptr);
     }
     printf("Signal %d caught, printing all solutions\n", sig);
+    end_time = std::chrono::system_clock::now();
     Driver::print_all_solutions();
     exit(sig);
 }
@@ -194,18 +197,17 @@ int main(int argc, char **argv) {
             while (true) { ;;
             }
         } else {
-            for (unsigned long thread: threads) {
+            for (pthread_t thread: threads) {
                 pthread_join(thread, nullptr);
             }
         }
-        end = clock();
+        end_time = std::chrono::system_clock::now();
     }
-    begin = clock();
-
+    begin_time = std::chrono::system_clock::now();
     auto puzzle = Puzzle(pieces_list);
     if (start_idx > 0)
         puzzle = Puzzle(shuffle_piece_list()[start_idx]);
-
+    
     if(print_steps)
         puzzle.set_print_steps();
     if (all_solutions)
@@ -214,13 +216,13 @@ int main(int argc, char **argv) {
         puzzle.set_write_to_file();
 
     auto sol = puzzle.solve();
-    end = clock();
-    printf("Time elapsed: %.2f\n", (double) (end - begin) / CLOCKS_PER_SEC);
+    end_time = std::chrono::system_clock::now();
+    auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - begin_time).count() / 1000.0;
+    printf("Total time elapsed: %.2f seconds\n", elapsed);
     auto valid = std::get<0>(sol);
     auto new_board = std::get<1>(sol);
-    new_board.print_board();
     if (valid) {
-        printf("Solved!\n");
+        new_board.print_board();
     } else {
         printf("No solution found!\n");
     }
