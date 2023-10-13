@@ -1,5 +1,5 @@
 # woodenpuzzle-cpp
-
+[![Makefile CI](https://github.com/GT3CH1/woodenpuzzle-cpp/actions/workflows/makefile.yml/badge.svg)](https://github.com/GT3CH1/woodenpuzzle-cpp/actions/workflows/makefile.yml)
 ### A brute force algorithm to solve a 10x6 wooden puzzle
 
 This program is a brute-force algorithm to solve a 10x6 puzzle that contains numerous

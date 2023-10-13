@@ -13,7 +13,7 @@ ifdef DEBUG
 CFLAGS += -g
 endif
 
-all: dir puzzle_solver test
+all: dir puzzle_solver
 
 $(PIECES:%.o): %.cpp
 	$(GCC) $(CFLAGS) $(SRC_DIR)$< -c -I$(INCLUDES)
@@ -28,6 +28,7 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 	$(GCC) $(CFLAGS) $< -c -I $(INCLUDES) -o $@
 clean:
 	rm -rf $(OBJ_DIR) $(BIN_DIR) ./bin/test
-test: dir puzzle_solver
-	$(GCC) $(CFLAGS) test/Test.cpp -lgtest -lgtest_main $(TEST_OBJ) -o bin/test -I $(INCLUDES)
-	./bin/test
+test_runner: dir puzzle_solver
+	$(GCC) $(CFLAGS) test/Test.cpp -lgtest -lgtest_main $(TEST_OBJ) -o bin/test_runner -I $(INCLUDES)
+test: test_runner
+	./bin/test_runner
