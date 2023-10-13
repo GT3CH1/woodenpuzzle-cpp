@@ -20,9 +20,7 @@ dir:
 	mkdir -p $(OBJ_DIR)
 	mkdir -p $(BIN_DIR)
 puzzle_solver: $(OBJ)
-	$(GCC) $(CFLAGS) -lpthread $^ -o solve_puzzle -I $(INCLUDES) -o $(BIN_DIR)/solve_puzzle
-run: all
-	./puzzle_solver
+	$(GCC) $(CFLAGS) -lpthread $^ -o solve_puzzle -I $(INCLUDES) -o $(BIN_DIR)/wooden_puzzle
 Pieces.o: $(SRC_DIR)/Pieces.cpp
 	$(GCC) $(CFLAGS) $< -c -I $(INCLUDES)
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
