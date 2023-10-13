@@ -14,8 +14,11 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
+    - name: Install gtest manually
+      run: sudo apt-get install libgtest-dev
+
     - name: Build
       run: make
 
-    - name: Run
-      run: ./bin/wooden_puzzle
+    - name: Test
+      run: make test
