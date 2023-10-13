@@ -92,19 +92,20 @@ namespace puzzle {
          */
         bool write_to_file = false;
 	
-	/**
-	 * The thread id.
-	 */
+        /**
+         * The thread id.
+         */
         int thread_id = 0;
 
-	/**
-	 * The list of available pieces to use.
-	 */
+        /**
+         * The list of available pieces to use.
+         */
         std::vector<PuzzlePiece> available_pieces;
 
-	/**
-	 * The time helper used for the puzzle.
-	TimeHelper time_helper;
+        /**
+         * The time helper used for the puzzle.
+         */
+        TimeHelper time_helper;
 
         /**
          * Recursive function used to solve the puzzle.

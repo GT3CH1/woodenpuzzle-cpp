@@ -1,7 +1,7 @@
 [
   {
     "arguments": [
-      "/usr/bin/clang++",
+      "/usr/bin/g++",
       "-Wall",
       "-O3",
       "-std=c++17",
@@ -18,7 +18,7 @@
   },
   {
     "arguments": [
-      "/usr/bin/clang++",
+      "/usr/bin/g++",
       "-Wall",
       "-O3",
       "-std=c++17",
@@ -35,7 +35,7 @@
   },
   {
     "arguments": [
-      "/usr/bin/clang++",
+      "/usr/bin/g++",
       "-Wall",
       "-O3",
       "-std=c++17",
@@ -52,7 +52,7 @@
   },
   {
     "arguments": [
-      "/usr/bin/clang++",
+      "/usr/bin/g++",
       "-Wall",
       "-O3",
       "-std=c++17",
@@ -69,7 +69,7 @@
   },
   {
     "arguments": [
-      "/usr/bin/clang++",
+      "/usr/bin/g++",
       "-Wall",
       "-O3",
       "-std=c++17",
@@ -86,7 +86,7 @@
   },
   {
     "arguments": [
-      "/usr/bin/clang++",
+      "/usr/bin/g++",
       "-Wall",
       "-O3",
       "-std=c++17",
@@ -103,7 +103,7 @@
   },
   {
     "arguments": [
-      "/usr/bin/clang++",
+      "/usr/bin/g++",
       "-Wall",
       "-O3",
       "-std=c++17",
@@ -120,7 +120,7 @@
   },
   {
     "arguments": [
-      "/usr/bin/clang++",
+      "/usr/bin/g++",
       "-Wall",
       "-O3",
       "-std=c++17",
@@ -137,7 +137,7 @@
   },
   {
     "arguments": [
-      "/usr/bin/clang++",
+      "/usr/bin/g++",
       "-Wall",
       "-O3",
       "-std=c++17",
@@ -154,7 +154,7 @@
   },
   {
     "arguments": [
-      "/usr/bin/clang++",
+      "/usr/bin/g++",
       "-Wall",
       "-O3",
       "-std=c++17",
@@ -171,7 +171,7 @@
   },
   {
     "arguments": [
-      "/usr/bin/clang++",
+      "/usr/bin/g++",
       "-Wall",
       "-O3",
       "-std=c++17",
@@ -188,7 +188,7 @@
   },
   {
     "arguments": [
-      "/usr/bin/clang++",
+      "/usr/bin/g++",
       "-Wall",
       "-O3",
       "-std=c++17",
@@ -205,7 +205,7 @@
   },
   {
     "arguments": [
-      "/usr/bin/clang++",
+      "/usr/bin/g++",
       "-Wall",
       "-O3",
       "-std=c++17",
@@ -222,7 +222,24 @@
   },
   {
     "arguments": [
-      "/usr/bin/clang++",
+      "/usr/bin/g++",
+      "-Wall",
+      "-O3",
+      "-std=c++17",
+      "-c",
+      "-I",
+      "include/",
+      "-o",
+      "obj/TimeHelper.o",
+      "src/TimeHelper.cpp"
+    ],
+    "directory": "/home/gcpease/Programming/woodenpuzzle-c",
+    "file": "/home/gcpease/Programming/woodenpuzzle-c/src/TimeHelper.cpp",
+    "output": "/home/gcpease/Programming/woodenpuzzle-c/obj/TimeHelper.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
       "-Wall",
       "-O3",
       "-std=c++17",
@@ -239,7 +256,7 @@
   },
   {
     "arguments": [
-      "/usr/bin/clang++",
+      "/usr/bin/g++",
       "-Wall",
       "-O3",
       "-std=c++17",
@@ -256,7 +273,7 @@
   },
   {
     "arguments": [
-      "/usr/bin/clang++",
+      "/usr/bin/g++",
       "-Wall",
       "-O3",
       "-std=c++17",
@@ -273,7 +290,7 @@
   },
   {
     "arguments": [
-      "/usr/bin/clang++",
+      "/usr/bin/g++",
       "-Wall",
       "-O3",
       "-std=c++17",
@@ -290,7 +307,24 @@
   },
   {
     "arguments": [
-      "/usr/bin/clang++",
+      "/usr/bin/g++",
+      "-Wall",
+      "-O3",
+      "-std=c++17",
+      "-c",
+      "-I",
+      "include/",
+      "-o",
+      "obj/main.o",
+      "src/main.cpp"
+    ],
+    "directory": "/home/gcpease/Programming/woodenpuzzle-c",
+    "file": "/home/gcpease/Programming/woodenpuzzle-c/src/main.cpp",
+    "output": "/home/gcpease/Programming/woodenpuzzle-c/obj/main.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
       "-Wall",
       "-O3",
       "-std=c++17",

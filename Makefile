@@ -25,6 +25,9 @@ run: all
 	./puzzle_solver
 Pieces.o: $(SRC_DIR)/Pieces.cpp
 	$(GCC) $(CFLAGS) $< -c -I $(INCLUDES)
+obj/main.o: src/main.cpp
+	$(GCC) $(CFLAGS) $< -lpthread -c -I $(INCLUDES) -o $@
+
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 	$(GCC) $(CFLAGS) $< -c -I $(INCLUDES) -o $@
 clean:
