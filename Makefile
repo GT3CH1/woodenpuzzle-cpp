@@ -6,7 +6,7 @@ INCLUDES := include/
 SRC := $(wildcard $(SRC_DIR)/*.cpp)
 OBJ := $(SRC:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
 GCC := g++
-CFLAGS := -Wall -O3 -std=c++17
+CFLAGS := -Wall -Werror -Wpedantic -O3 -std=c++17
 
 ifdef DEBUG
 CFLAGS += -g
@@ -25,9 +25,6 @@ run: all
 	./puzzle_solver
 Pieces.o: $(SRC_DIR)/Pieces.cpp
 	$(GCC) $(CFLAGS) $< -c -I $(INCLUDES)
-obj/main.o: src/main.cpp
-	$(GCC) $(CFLAGS) $< -lpthread -c -I $(INCLUDES) -o $@
-
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 	$(GCC) $(CFLAGS) $< -c -I $(INCLUDES) -o $@
 clean:
