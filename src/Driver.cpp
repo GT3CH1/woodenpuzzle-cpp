@@ -2,7 +2,7 @@
 // Created by Pease, Gavin C on 10/8/23.
 //
 
-#include "driver.h"
+#include "Driver.h"
 #include <iostream>
 #include <fstream>
 #include <algorithm>

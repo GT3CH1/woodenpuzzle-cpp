@@ -1,4 +1,4 @@
-#include "puzzlepiece.h"
+#include "PuzzlePiece.h"
 #include <iostream>
 
 using namespace puzzle;

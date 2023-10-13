@@ -1,6 +1,6 @@
 #ifndef AWKWARDTPIECE_H
 #define AWKWARDTPIECE_H
-#include "puzzlepiece.h"
+#include "PuzzlePiece.h"
 using namespace puzzle;
 class AwkwardTPiece : public PuzzlePiece {
     public:

@@ -2,7 +2,7 @@
 #define PUZZLE_H
 
 #include "Board.h"
-#include "puzzlepiece.h"
+#include "PuzzlePiece.h"
 #include "Pieces.h"
 #include <vector>
 #include <tuple>

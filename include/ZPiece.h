@@ -1,6 +1,6 @@
 #ifndef Z_PIECE
 #define Z_PIECE
-#include "puzzlepiece.h"
+#include "PuzzlePiece.h"
 using namespace puzzle;
 class ZPiece : public PuzzlePiece {
     public:

@@ -1,4 +1,4 @@
-#include "driver.h"
+#include "Driver.h"
 #include "Puzzle.h"
 #include <iostream>
 #include <pthread.h>

@@ -4,7 +4,7 @@
 #include <string>
 #include <iostream>
 #include <set>
-#include "puzzlepiece.h"
+#include "PuzzlePiece.h"
 #include "TimeHelper.h"
 namespace puzzle {
     /**
