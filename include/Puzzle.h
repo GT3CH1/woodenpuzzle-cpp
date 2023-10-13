@@ -52,11 +52,11 @@ namespace puzzle {
          * Creates a new puzzle object.
          */
         Puzzle();
-	
-	/**
-	 * Creates a puzzle object with a list of pieces to use.
-	 * @param pieces The list of pieces to use.
-	 */
+
+        /**
+         * Creates a puzzle object with a list of pieces to use.
+         * @param pieces The list of pieces to use.
+         */
         Puzzle(std::vector<PuzzlePiece> &pieces);
 
         /**
@@ -64,16 +64,16 @@ namespace puzzle {
          */
         static void kill();
 
-	/**
-	 * Sets the thread id of the puzzle.
-	 * @param id The thread id.
-	 */
+        /**
+         * Sets the thread id of the puzzle.
+         * @param id The thread id.
+         */
         void set_thread_id(int id);
 
-	/**
-	 * Returns the thread id used by the puzzle.
-	 * @return The thread id.
-	 */
+        /**
+         * Returns the thread id used by the puzzle.
+         * @return The thread id.
+         */
         int get_thread_id();
 
     private:
@@ -91,7 +91,7 @@ namespace puzzle {
          * Whether to write the solution and statistics to `solutions.txt`.
          */
         bool write_to_file = false;
-	
+
         /**
          * The thread id.
          */
@@ -101,6 +101,21 @@ namespace puzzle {
          * The list of available pieces to use.
          */
         std::vector<PuzzlePiece> available_pieces;
+
+        /**
+         * The list of solutions found by the algorithm.
+         */
+        static std::map<uint, puzzle::Board> solutions_map;
+
+        /**
+         * The set of solutions found by the algorithm.
+         */
+        static std::set<uint> solutions;
+
+        /**
+         * The mutex used for thread safety.
+         */
+        static inline pthread_mutex_t lock = PTHREAD_MUTEX_INITIALIZER;
 
         /**
          * The time helper used for the puzzle.

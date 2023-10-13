@@ -3,9 +3,9 @@
 
 using namespace puzzle;
 
-std::map<uint, puzzle::Board> solutions_map;
-static std::set<uint> solutions;
-static pthread_mutex_t lock = PTHREAD_MUTEX_INITIALIZER;
+std::map<uint, puzzle::Board> Puzzle::solutions_map;
+
+std::set<uint> Puzzle::solutions;
 
 Puzzle::Puzzle() {
     solutions_map = std::map<uint, puzzle::Board>();
@@ -118,7 +118,7 @@ Puzzle::solve(Board board, const std::vector<PuzzlePiece> &pieces, const std::se
 }
 
 std::map<uint, puzzle::Board> Puzzle::get_solutions() {
-    return solutions_map;
+    return Puzzle::solutions_map;
 }
 
 void Puzzle::set_all_solutions() {

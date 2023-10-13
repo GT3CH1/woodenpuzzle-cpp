@@ -10,6 +10,7 @@
 
 std::vector<pthread_t> Driver::threads = std::vector<pthread_t>();
 TimeHelper Driver::time_helper = TimeHelper();
+
 void Driver::multithread_driver(void *args) {
     auto pieces = ((struct thread_args *) args)->pieces;
     auto thread_id = ((struct thread_args *) args)->thread_id;
@@ -62,7 +63,8 @@ void Driver::setup_arguments(int argc, char *const *argv) {
     for (int i = 0; i < argc; i++) {
         auto arg = std::string(argv[i]);
         if (arg == "-h") {
-            printf("Usage: ./solve_puzzle [-c] [-p] [-w]\n");
+            printf("Wooden Puzzle Solver v1.0\n");
+            printf("Usage: ./solve_puzzle [-cpwtnsh] \n");
             printf("Options:\n");
             printf("  -c: All solutions mode\n");
             printf("  -p: Print steps mode\n");
@@ -189,11 +191,11 @@ void Driver::handle_single_thread() {
 void Driver::handle_multi_thread() {
     Driver::time_helper.set_start_time();
     auto shuffled_pieces = shuffle_piece_list();
-    for (int j = 0; j < num_threads; j++) {
+    for (int j = 0; j < Driver::get_num_threads(); j++) {
         pthread_t thread;
         auto args = new struct thread_args;
         args->thread_id = j;
-        args->pieces = shuffled_pieces[j + start_idx];
+        args->pieces = shuffled_pieces[j + Driver::get_start_idx()];
         pthread_create(&thread, nullptr, (void *(*)(void *)) Driver::multithread_driver, args);
         pthread_detach(thread);
         Driver::threads.push_back(thread);

@@ -1,7 +1,6 @@
 #include "Driver.h"
 #include "Puzzle.h"
 #include <iostream>
-#include <pthread.h>
 #include <csignal>
 void signal_handler(int sig) {
     Puzzle::kill();
