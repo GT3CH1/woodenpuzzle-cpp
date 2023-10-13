@@ -3,7 +3,7 @@
 #include "AwkwardTPiece.h"
 #include "LongLPiece.h"
 #include "ShortTPiece.h"
-#include "puzzlepiece.h"
+#include "PuzzlePiece.h"
 #include "PlusPiece.h"
 #include "UtahPiece.h"
 #include "IPiece.h"

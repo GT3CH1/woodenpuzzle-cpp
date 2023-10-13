@@ -1,6 +1,6 @@
 #ifndef UTAH_PIECE
 #define UTAH_PIECE
-#include "puzzlepiece.h"
+#include "PuzzlePiece.h"
 using namespace puzzle;
 class UtahPiece : public PuzzlePiece
 {

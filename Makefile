@@ -6,10 +6,10 @@ INCLUDES := include/
 SRC := $(wildcard $(SRC_DIR)/*.cpp)
 OBJ := $(SRC:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
 GCC := g++
-CFLAGS := -Wall -O3 -std=c++17
+CFLAGS := -Wall -Werror -Wpedantic -O3 -std=c++17
 
 ifdef DEBUG
-CFLAGS = -Wall -g -std=c++17
+CFLAGS += -g
 endif
 
 all: dir puzzle_solver
@@ -20,9 +20,7 @@ dir:
 	mkdir -p $(OBJ_DIR)
 	mkdir -p $(BIN_DIR)
 puzzle_solver: $(OBJ)
-	$(GCC) $(CFLAGS)  $^ -o solve_puzzle -I $(INCLUDES) -o $(BIN_DIR)/solve_puzzle
-run: all
-	./puzzle_solver
+	$(GCC) $(CFLAGS) -lpthread $^ -o solve_puzzle -I $(INCLUDES) -o $(BIN_DIR)/wooden_puzzle
 Pieces.o: $(SRC_DIR)/Pieces.cpp
 	$(GCC) $(CFLAGS) $< -c -I $(INCLUDES)
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp

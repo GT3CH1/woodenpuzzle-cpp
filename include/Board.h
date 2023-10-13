@@ -4,7 +4,8 @@
 #include <string>
 #include <iostream>
 #include <set>
-#include "puzzlepiece.h"
+#include "PuzzlePiece.h"
+#include "TimeHelper.h"
 namespace puzzle {
     /**
      * @brief Represents a 10x6 (WxH) board. Each board is represented by a vector of characters. The vector is 60
@@ -122,11 +123,29 @@ namespace puzzle {
          * The hash value of this board.
          */
         uint hash;
+	
+	/**
+	 * Sets the thread id that was used to solve this board.
+	 * @param thread_id The thread id.
+	 */
+        void set_thread_id(int thread_id);
+
+	/**
+	 * Gets the thread id that was used to solve this board.
+	 * @return The thread id.
+	 */
+        int get_thread_id();
+
     private:
         /**
          * The width of the board.
          */
         static int width;
+
+	/**
+	 * The thread id that was used to solve this board.
+	 */
+        int thread_id;
 
         /**
          * The height of the board.
@@ -139,14 +158,14 @@ namespace puzzle {
         std::vector<char> data;
 
         /**
-         * The pieces that have been placed on the board.
+         * The available_pieces that have been placed on the board.
          */
         std::set<char> pieces;
 
         /**
          * The number of seconds it took to solve this board.
          */
-        double time_to_solve;
+        double time_to_solve = -1;
     };
 };
 

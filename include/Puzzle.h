@@ -2,13 +2,14 @@
 #define PUZZLE_H
 
 #include "Board.h"
-#include "puzzlepiece.h"
+#include "PuzzlePiece.h"
 #include "Pieces.h"
 #include <vector>
 #include <tuple>
 #include <map>
 #include <iostream>
 #include <fstream>
+#include <chrono>
 
 namespace puzzle {
     /**
@@ -46,15 +47,6 @@ namespace puzzle {
          */
         static std::map<uint, puzzle::Board> get_solutions();
 
-        /**
-         * The start time of the recursive call.
-         */
-        clock_t begin;
-
-        /**
-         * The end time of the recursive call.
-         */
-        clock_t end;
 
         /**
          * Creates a new puzzle object.
@@ -62,9 +54,27 @@ namespace puzzle {
         Puzzle();
 
         /**
+         * Creates a puzzle object with a list of pieces to use.
+         * @param pieces The list of pieces to use.
+         */
+        Puzzle(std::vector<PuzzlePiece> &pieces);
+
+        /**
          * Enables the kill switch to stop the algorithm in the event of a signal.
          */
         static void kill();
+
+        /**
+         * Sets the thread id of the puzzle.
+         * @param id The thread id.
+         */
+        void set_thread_id(int id);
+
+        /**
+         * Returns the thread id used by the puzzle.
+         * @return The thread id.
+         */
+        int get_thread_id();
 
     private:
         /**
@@ -83,14 +93,44 @@ namespace puzzle {
         bool write_to_file = false;
 
         /**
+         * The thread id.
+         */
+        int thread_id = 0;
+
+        /**
+         * The list of available pieces to use.
+         */
+        std::vector<PuzzlePiece> available_pieces;
+
+        /**
+         * The list of solutions found by the algorithm.
+         */
+        static std::map<uint, puzzle::Board> solutions_map;
+
+        /**
+         * The set of solutions found by the algorithm.
+         */
+        static std::set<uint> solutions;
+
+        /**
+         * The mutex used for thread safety.
+         */
+        static inline pthread_mutex_t lock = PTHREAD_MUTEX_INITIALIZER;
+
+        /**
+         * The time helper used for the puzzle.
+         */
+        TimeHelper time_helper;
+
+        /**
          * Recursive function used to solve the puzzle.
          * @param board The current board state.
-         * @param pieces The current list of pieces that are available to be placed.
-         * @param placed_pieces The current list of pieces that have been placed.
+         * @param pieces The current list of available_pieces that are available to be placed.
+         * @param placed_pieces The current list of available_pieces that have been placed.
          * @return
          */
         std::tuple<bool, Board>
-        solve(Board board, const std::vector<PuzzlePiece>& pieces, const std::set<PuzzlePiece> &placed_pieces);
+        solve(Board board, const std::vector<PuzzlePiece> &pieces, const std::set<PuzzlePiece> &placed_pieces);
     };
 }
 [[maybe_unused]]
@@ -98,4 +138,6 @@ namespace puzzle {
  * The kill switch used to stop the algorithm in the event of a signal.
  */
 static bool kill_switch = false;
+
+
 #endif

@@ -3,8 +3,9 @@
 
 using namespace puzzle;
 
-std::map<uint, puzzle::Board> solutions_map;
-static std::set<uint> solutions;
+std::map<uint, puzzle::Board> Puzzle::solutions_map;
+
+std::set<uint> Puzzle::solutions;
 
 Puzzle::Puzzle() {
     solutions_map = std::map<uint, puzzle::Board>();
@@ -13,28 +14,13 @@ Puzzle::Puzzle() {
     all_solutions = false;
     print_steps = false;
     write_to_file = false;
-
-    begin = end = 0;
 }
 
 std::tuple<bool, Board> Puzzle::solve() {
-    begin = clock();
-    auto pieces = std::vector<PuzzlePiece>();
-    pieces.clear();
-    pieces.push_back(UtahPiece());
-    pieces.push_back(PlusPiece());
-    pieces.push_back(TPiece());
-    pieces.push_back(MPiece());
-    pieces.push_back(LongZPiece());
-    pieces.push_back(ShortTPiece());
-    pieces.push_back(ZPiece());
-    pieces.push_back(AwkwardTPiece());
-    pieces.push_back(LPiece());
-    pieces.push_back(LongLPiece());
-    pieces.push_back(IPiece());
-    pieces.push_back(UPiece());
-    pieces.push_back(T2Piece());
-    return solve(Board(), pieces, std::set<PuzzlePiece>());
+	time_helper.set_start_time();
+    auto board = Board();
+    board.set_thread_id(thread_id);
+    return solve(board, available_pieces, std::set<PuzzlePiece>());
 }
 
 std::tuple<bool, Board>
@@ -57,11 +43,14 @@ Puzzle::solve(Board board, const std::vector<PuzzlePiece> &pieces, const std::se
         int rotate = 0;
         int x = 0;
         int y = 0;
+	/*
+	 * This loop is what drives rotating, flipping, and moving the puzzle
+	 * pieces across the board until the piece is in a valid location.
+	 * It essentially is a condensed nested for loop.
+	 */
         while (flip < 1 || rotate < 4 || y < 6 || x < 10) {
             if (copy.add_piece(x, y, piece_copy) && !copy.is_invalid()) {
                 placed_copy.insert(piece_copy);
-                if (print_steps)
-                    copy.print_board();
                 if (!copy.is_solved()) {
                     auto sol = solve(Board(copy), pieces, placed_copy);
                     if (!all_solutions && std::get<0>(sol)) {
@@ -70,29 +59,32 @@ Puzzle::solve(Board board, const std::vector<PuzzlePiece> &pieces, const std::se
                     copy = Board(board);
                     break;
                 }
-                if (!solutions.empty() && solutions.find(copy.hash) != solutions.end())
+                pthread_mutex_lock(&lock);
+                if (!solutions.empty() && solutions.find(copy.hash) != solutions.end()) {
+                    pthread_mutex_unlock(&lock);
                     break;
-                if (!all_solutions) {
-                    return std::make_tuple(true, copy);
                 }
-                copy.print_board();
-                printf("Solution hash: %u\n", copy.hash);
-                end = clock();
-                copy.set_time_to_solve((double) (end - begin) / CLOCKS_PER_SEC);
-                printf("Time elapsed: %.2f seconds\n\n", copy.get_time_to_solve());
-                std::cout << std::flush;
-                begin = clock();
+                pthread_mutex_unlock(&lock);
+                if (!all_solutions)
+                    return std::make_tuple(true, copy);
+                pthread_mutex_lock(&lock);
+		time_helper.set_end_time();
+                copy.set_time_to_solve(time_helper.calculate_time());
+		if (print_steps) {
+			copy.print_board();
+			std::cout << std::flush;
+		}
+		time_helper.set_start_time();
                 solutions.insert(copy.hash);
                 solutions_map.insert({copy.hash, Board(copy)});
+                pthread_mutex_unlock(&lock);
                 if (write_to_file && !kill_switch) {
+                    pthread_mutex_lock(&lock);
                     std::ofstream myfile;
                     myfile.open("solutions.txt", std::ios::app);
                     myfile << copy.get_pretty_data() << "\n";
-                    myfile << "Solution hash: " << copy.hash << "\n";
-                    myfile << "Time elapsed: " << copy.get_time_to_solve()
-                           << " seconds\n";
-                    myfile << "\n";
                     myfile.close();
+                    pthread_mutex_unlock(&lock);
                 }
                 return std::make_tuple(false, copy);
             }
@@ -126,7 +118,7 @@ Puzzle::solve(Board board, const std::vector<PuzzlePiece> &pieces, const std::se
 }
 
 std::map<uint, puzzle::Board> Puzzle::get_solutions() {
-    return solutions_map;
+    return Puzzle::solutions_map;
 }
 
 void Puzzle::set_all_solutions() {
@@ -143,4 +135,22 @@ void Puzzle::set_write_to_file() {
 
 void Puzzle::kill() {
     kill_switch = true;
+}
+
+Puzzle::Puzzle(std::vector<PuzzlePiece> &pieces) {
+    solutions_map = std::map<uint, puzzle::Board>();
+    solutions = std::set<uint>();
+    kill_switch = false;
+    all_solutions = false;
+    print_steps = false;
+    write_to_file = false;
+    available_pieces = pieces;
+}
+
+void Puzzle::set_thread_id(int id) {
+    thread_id = id;
+}
+
+int Puzzle::get_thread_id() {
+    return thread_id;
 }

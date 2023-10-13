@@ -1,5 +1,5 @@
 #include "IPiece.h"
-#include "puzzlepiece.h"
+#include "PuzzlePiece.h"
 using namespace puzzle;
 IPiece::IPiece()
     : PuzzlePiece('I')

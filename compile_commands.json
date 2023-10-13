@@ -1,0 +1,342 @@
+[
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-Wall",
+      "-O3",
+      "-std=c++17",
+      "-c",
+      "-I",
+      "include/",
+      "-o",
+      "obj/AwkwardTPiece.o",
+      "src/AwkwardTPiece.cpp"
+    ],
+    "directory": "/home/gcpease/Programming/woodenpuzzle-c",
+    "file": "/home/gcpease/Programming/woodenpuzzle-c/src/AwkwardTPiece.cpp",
+    "output": "/home/gcpease/Programming/woodenpuzzle-c/obj/AwkwardTPiece.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-Wall",
+      "-O3",
+      "-std=c++17",
+      "-c",
+      "-I",
+      "include/",
+      "-o",
+      "obj/Board.o",
+      "src/Board.cpp"
+    ],
+    "directory": "/home/gcpease/Programming/woodenpuzzle-c",
+    "file": "/home/gcpease/Programming/woodenpuzzle-c/src/Board.cpp",
+    "output": "/home/gcpease/Programming/woodenpuzzle-c/obj/Board.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-Wall",
+      "-O3",
+      "-std=c++17",
+      "-c",
+      "-I",
+      "include/",
+      "-o",
+      "obj/IPiece.o",
+      "src/IPiece.cpp"
+    ],
+    "directory": "/home/gcpease/Programming/woodenpuzzle-c",
+    "file": "/home/gcpease/Programming/woodenpuzzle-c/src/IPiece.cpp",
+    "output": "/home/gcpease/Programming/woodenpuzzle-c/obj/IPiece.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-Wall",
+      "-O3",
+      "-std=c++17",
+      "-c",
+      "-I",
+      "include/",
+      "-o",
+      "obj/LPiece.o",
+      "src/LPiece.cpp"
+    ],
+    "directory": "/home/gcpease/Programming/woodenpuzzle-c",
+    "file": "/home/gcpease/Programming/woodenpuzzle-c/src/LPiece.cpp",
+    "output": "/home/gcpease/Programming/woodenpuzzle-c/obj/LPiece.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-Wall",
+      "-O3",
+      "-std=c++17",
+      "-c",
+      "-I",
+      "include/",
+      "-o",
+      "obj/LongLPiece.o",
+      "src/LongLPiece.cpp"
+    ],
+    "directory": "/home/gcpease/Programming/woodenpuzzle-c",
+    "file": "/home/gcpease/Programming/woodenpuzzle-c/src/LongLPiece.cpp",
+    "output": "/home/gcpease/Programming/woodenpuzzle-c/obj/LongLPiece.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-Wall",
+      "-O3",
+      "-std=c++17",
+      "-c",
+      "-I",
+      "include/",
+      "-o",
+      "obj/LongZPiece.o",
+      "src/LongZPiece.cpp"
+    ],
+    "directory": "/home/gcpease/Programming/woodenpuzzle-c",
+    "file": "/home/gcpease/Programming/woodenpuzzle-c/src/LongZPiece.cpp",
+    "output": "/home/gcpease/Programming/woodenpuzzle-c/obj/LongZPiece.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-Wall",
+      "-O3",
+      "-std=c++17",
+      "-c",
+      "-I",
+      "include/",
+      "-o",
+      "obj/MPiece.o",
+      "src/MPiece.cpp"
+    ],
+    "directory": "/home/gcpease/Programming/woodenpuzzle-c",
+    "file": "/home/gcpease/Programming/woodenpuzzle-c/src/MPiece.cpp",
+    "output": "/home/gcpease/Programming/woodenpuzzle-c/obj/MPiece.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-Wall",
+      "-O3",
+      "-std=c++17",
+      "-c",
+      "-I",
+      "include/",
+      "-o",
+      "obj/Pieces.o",
+      "src/Pieces.cpp"
+    ],
+    "directory": "/home/gcpease/Programming/woodenpuzzle-c",
+    "file": "/home/gcpease/Programming/woodenpuzzle-c/src/Pieces.cpp",
+    "output": "/home/gcpease/Programming/woodenpuzzle-c/obj/Pieces.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-Wall",
+      "-O3",
+      "-std=c++17",
+      "-c",
+      "-I",
+      "include/",
+      "-o",
+      "obj/PlusPiece.o",
+      "src/PlusPiece.cpp"
+    ],
+    "directory": "/home/gcpease/Programming/woodenpuzzle-c",
+    "file": "/home/gcpease/Programming/woodenpuzzle-c/src/PlusPiece.cpp",
+    "output": "/home/gcpease/Programming/woodenpuzzle-c/obj/PlusPiece.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-Wall",
+      "-O3",
+      "-std=c++17",
+      "-c",
+      "-I",
+      "include/",
+      "-o",
+      "obj/Puzzle.o",
+      "src/Puzzle.cpp"
+    ],
+    "directory": "/home/gcpease/Programming/woodenpuzzle-c",
+    "file": "/home/gcpease/Programming/woodenpuzzle-c/src/Puzzle.cpp",
+    "output": "/home/gcpease/Programming/woodenpuzzle-c/obj/Puzzle.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-Wall",
+      "-O3",
+      "-std=c++17",
+      "-c",
+      "-I",
+      "include/",
+      "-o",
+      "obj/ShortTPiece.o",
+      "src/ShortTPiece.cpp"
+    ],
+    "directory": "/home/gcpease/Programming/woodenpuzzle-c",
+    "file": "/home/gcpease/Programming/woodenpuzzle-c/src/ShortTPiece.cpp",
+    "output": "/home/gcpease/Programming/woodenpuzzle-c/obj/ShortTPiece.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-Wall",
+      "-O3",
+      "-std=c++17",
+      "-c",
+      "-I",
+      "include/",
+      "-o",
+      "obj/T2Piece.o",
+      "src/T2Piece.cpp"
+    ],
+    "directory": "/home/gcpease/Programming/woodenpuzzle-c",
+    "file": "/home/gcpease/Programming/woodenpuzzle-c/src/T2Piece.cpp",
+    "output": "/home/gcpease/Programming/woodenpuzzle-c/obj/T2Piece.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-Wall",
+      "-O3",
+      "-std=c++17",
+      "-c",
+      "-I",
+      "include/",
+      "-o",
+      "obj/TPiece.o",
+      "src/TPiece.cpp"
+    ],
+    "directory": "/home/gcpease/Programming/woodenpuzzle-c",
+    "file": "/home/gcpease/Programming/woodenpuzzle-c/src/TPiece.cpp",
+    "output": "/home/gcpease/Programming/woodenpuzzle-c/obj/TPiece.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-Wall",
+      "-O3",
+      "-std=c++17",
+      "-c",
+      "-I",
+      "include/",
+      "-o",
+      "obj/TimeHelper.o",
+      "src/TimeHelper.cpp"
+    ],
+    "directory": "/home/gcpease/Programming/woodenpuzzle-c",
+    "file": "/home/gcpease/Programming/woodenpuzzle-c/src/TimeHelper.cpp",
+    "output": "/home/gcpease/Programming/woodenpuzzle-c/obj/TimeHelper.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-Wall",
+      "-O3",
+      "-std=c++17",
+      "-c",
+      "-I",
+      "include/",
+      "-o",
+      "obj/UPiece.o",
+      "src/UPiece.cpp"
+    ],
+    "directory": "/home/gcpease/Programming/woodenpuzzle-c",
+    "file": "/home/gcpease/Programming/woodenpuzzle-c/src/UPiece.cpp",
+    "output": "/home/gcpease/Programming/woodenpuzzle-c/obj/UPiece.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-Wall",
+      "-O3",
+      "-std=c++17",
+      "-c",
+      "-I",
+      "include/",
+      "-o",
+      "obj/UtahPiece.o",
+      "src/UtahPiece.cpp"
+    ],
+    "directory": "/home/gcpease/Programming/woodenpuzzle-c",
+    "file": "/home/gcpease/Programming/woodenpuzzle-c/src/UtahPiece.cpp",
+    "output": "/home/gcpease/Programming/woodenpuzzle-c/obj/UtahPiece.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-Wall",
+      "-O3",
+      "-std=c++17",
+      "-c",
+      "-I",
+      "include/",
+      "-o",
+      "obj/ZPiece.o",
+      "src/ZPiece.cpp"
+    ],
+    "directory": "/home/gcpease/Programming/woodenpuzzle-c",
+    "file": "/home/gcpease/Programming/woodenpuzzle-c/src/ZPiece.cpp",
+    "output": "/home/gcpease/Programming/woodenpuzzle-c/obj/ZPiece.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-Wall",
+      "-O3",
+      "-std=c++17",
+      "-c",
+      "-I",
+      "include/",
+      "-o",
+      "obj/driver.o",
+      "src/driver.cpp"
+    ],
+    "directory": "/home/gcpease/Programming/woodenpuzzle-c",
+    "file": "/home/gcpease/Programming/woodenpuzzle-c/src/driver.cpp",
+    "output": "/home/gcpease/Programming/woodenpuzzle-c/obj/driver.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-Wall",
+      "-O3",
+      "-std=c++17",
+      "-c",
+      "-I",
+      "include/",
+      "-o",
+      "obj/main.o",
+      "src/main.cpp"
+    ],
+    "directory": "/home/gcpease/Programming/woodenpuzzle-c",
+    "file": "/home/gcpease/Programming/woodenpuzzle-c/src/main.cpp",
+    "output": "/home/gcpease/Programming/woodenpuzzle-c/obj/main.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-Wall",
+      "-O3",
+      "-std=c++17",
+      "-c",
+      "-I",
+      "include/",
+      "-o",
+      "obj/puzzlepiece.o",
+      "src/puzzlepiece.cpp"
+    ],
+    "directory": "/home/gcpease/Programming/woodenpuzzle-c",
+    "file": "/home/gcpease/Programming/woodenpuzzle-c/src/puzzlepiece.cpp",
+    "output": "/home/gcpease/Programming/woodenpuzzle-c/obj/puzzlepiece.o"
+  }
+]
