@@ -79,7 +79,7 @@ void Driver::print_all_solutions() {
 void signal_handler(int sig) {
     Puzzle::kill();
     for (pthread_t thread: threads) {
-        pthread_join(thread, nullptr);
+        pthread_kill(thread, sig);
     }
     printf("Signal %d caught, printing all solutions\n", sig);
     end_time = std::chrono::system_clock::now();
