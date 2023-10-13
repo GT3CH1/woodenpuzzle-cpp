@@ -17,7 +17,7 @@ Puzzle::Puzzle() {
 }
 
 std::tuple<bool, Board> Puzzle::solve() {
-    begin = std::chrono::system_clock::now();
+	time_helper.set_start_time();
     auto board = Board();
     board.set_thread_id(thread_id);
     return solve(board, available_pieces, std::set<PuzzlePiece>());
@@ -43,10 +43,14 @@ Puzzle::solve(Board board, const std::vector<PuzzlePiece> &pieces, const std::se
         int rotate = 0;
         int x = 0;
         int y = 0;
+	/*
+	 * This loop is what drives rotating, flipping, and moving the puzzle
+	 * pieces across the board until the piece is in a valid location.
+	 * It essentially is a condensed nested for loop.
+	 */
         while (flip < 1 || rotate < 4 || y < 6 || x < 10) {
             if (copy.add_piece(x, y, piece_copy) && !copy.is_invalid()) {
                 placed_copy.insert(piece_copy);
-
                 if (!copy.is_solved()) {
                     auto sol = solve(Board(copy), pieces, placed_copy);
                     if (!all_solutions && std::get<0>(sol)) {
@@ -64,13 +68,13 @@ Puzzle::solve(Board board, const std::vector<PuzzlePiece> &pieces, const std::se
                 if (!all_solutions)
                     return std::make_tuple(true, copy);
                 pthread_mutex_lock(&lock);
-                end = std::chrono::system_clock::now();
-                auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() / 1000.0;
-                copy.set_time_to_solve(elapsed);
-		if (print_steps)
+		time_helper.set_end_time();
+                copy.set_time_to_solve(time_helper.calculate_time());
+		if (print_steps) {
 			copy.print_board();
-                std::cout << std::flush;
-                begin = std::chrono::system_clock::now();
+			std::cout << std::flush;
+		}
+		time_helper.set_start_time();
                 solutions.insert(copy.hash);
                 solutions_map.insert({copy.hash, Board(copy)});
                 pthread_mutex_unlock(&lock);

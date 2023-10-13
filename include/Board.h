@@ -5,6 +5,7 @@
 #include <iostream>
 #include <set>
 #include "puzzlepiece.h"
+#include "TimeHelper.h"
 namespace puzzle {
     /**
      * @brief Represents a 10x6 (WxH) board. Each board is represented by a vector of characters. The vector is 60
@@ -122,9 +123,17 @@ namespace puzzle {
          * The hash value of this board.
          */
         uint hash;
-
+	
+	/**
+	 * Sets the thread id that was used to solve this board.
+	 * @param thread_id The thread id.
+	 */
         void set_thread_id(int thread_id);
 
+	/**
+	 * Gets the thread id that was used to solve this board.
+	 * @return The thread id.
+	 */
         int get_thread_id();
 
     private:
@@ -133,6 +142,9 @@ namespace puzzle {
          */
         static int width;
 
+	/**
+	 * The thread id that was used to solve this board.
+	 */
         int thread_id;
 
         /**

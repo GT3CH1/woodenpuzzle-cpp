@@ -15,12 +15,10 @@ bool multi_thread = false;
 bool all_solutions = false;
 bool write_mode = false;
 bool print_steps = false;
-std::chrono::system_clock::time_point begin_time;
-std::chrono::system_clock::time_point end_time;
-struct thread_args {
-    int thread_id;
-    std::vector<PuzzlePiece> pieces;
-};
+
+/**
+ * The list of pieces to use for the puzzle
+ */
 std::vector<PuzzlePiece> pieces_list = std::vector<PuzzlePiece>(
         {
                 UtahPiece(),
@@ -38,7 +36,7 @@ std::vector<PuzzlePiece> pieces_list = std::vector<PuzzlePiece>(
                 T2Piece()
         });
 
-void multithread_driver(void *args) {
+void Driver::multithread_driver(void *args) {
     auto pieces = ((struct thread_args *) args)->pieces;
     auto thread_id = ((struct thread_args *) args)->thread_id;
     auto p = Puzzle(pieces);
@@ -54,9 +52,9 @@ void multithread_driver(void *args) {
 
 void Driver::print_all_solutions() {
     // print all solutions from Puzzle::solutions_map
-    end_time = std::chrono::system_clock::now();
+    time_helper.set_end_time();
     printf("--------------------\n");
-    auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - begin_time).count() / 1000.0;
+    double elapsed = time_helper.calculate_time();
     int solution_count = 0;
     std::vector<int> solution_per_thread = std::vector<int>(num_threads);
     for (auto &solution: Puzzle::get_solutions()) {
@@ -82,7 +80,7 @@ void signal_handler(int sig) {
         pthread_kill(thread, sig);
     }
     printf("Signal %d caught, printing all solutions\n", sig);
-    end_time = std::chrono::system_clock::now();
+    time_helper.set_end_time();
     Driver::print_all_solutions();
     exit(sig);
 }
@@ -181,14 +179,14 @@ int main(int argc, char **argv) {
     }
 
     if (multi_thread) {
-        begin_time = std::chrono::system_clock::now();
+        time_helper.set_start_time();
         auto shuffled_pieces = shuffle_piece_list();
         for (int j = 0; j < num_threads; j++) {
             pthread_t thread;
             auto args = new struct thread_args;
             args->thread_id = j;
             args->pieces = shuffled_pieces[j + start_idx];
-            pthread_create(&thread, nullptr, (void *(*)(void *)) multithread_driver, args);
+            pthread_create(&thread, nullptr, (void *(*)(void *)) Driver::multithread_driver, args);
             if (all_solutions)
                 pthread_detach(thread);
             threads.push_back(thread);
@@ -201,9 +199,9 @@ int main(int argc, char **argv) {
                 pthread_join(thread, nullptr);
             }
         }
-        end_time = std::chrono::system_clock::now();
+        time_helper.set_end_time();
     }
-    begin_time = std::chrono::system_clock::now();
+    time_helper.set_start_time();
     auto puzzle = Puzzle(pieces_list);
     if (start_idx > 0)
         puzzle = Puzzle(shuffle_piece_list()[start_idx]);
@@ -216,8 +214,8 @@ int main(int argc, char **argv) {
         puzzle.set_write_to_file();
 
     auto sol = puzzle.solve();
-    end_time = std::chrono::system_clock::now();
-    auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - begin_time).count() / 1000.0;
+    time_helper.set_end_time();
+    double elapsed = time_helper.calculate_time();
     printf("Total time elapsed: %.2f seconds\n", elapsed);
     auto valid = std::get<0>(sol);
     auto new_board = std::get<1>(sol);

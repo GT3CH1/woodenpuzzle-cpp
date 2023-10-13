@@ -47,21 +47,16 @@ namespace puzzle {
          */
         static std::map<uint, puzzle::Board> get_solutions();
 
-        /**
-         * The start time of the recursive call.
-         */
-        std::chrono::system_clock::time_point begin;
-
-        /**
-         * The end time of the recursive call.
-         */
-        std::chrono::system_clock::time_point end;
 
         /**
          * Creates a new puzzle object.
          */
         Puzzle();
-
+	
+	/**
+	 * Creates a puzzle object with a list of pieces to use.
+	 * @param pieces The list of pieces to use.
+	 */
         Puzzle(std::vector<PuzzlePiece> &pieces);
 
         /**
@@ -69,8 +64,16 @@ namespace puzzle {
          */
         static void kill();
 
+	/**
+	 * Sets the thread id of the puzzle.
+	 * @param id The thread id.
+	 */
         void set_thread_id(int id);
 
+	/**
+	 * Returns the thread id used by the puzzle.
+	 * @return The thread id.
+	 */
         int get_thread_id();
 
     private:
@@ -88,10 +91,20 @@ namespace puzzle {
          * Whether to write the solution and statistics to `solutions.txt`.
          */
         bool write_to_file = false;
-
+	
+	/**
+	 * The thread id.
+	 */
         int thread_id = 0;
 
+	/**
+	 * The list of available pieces to use.
+	 */
         std::vector<PuzzlePiece> available_pieces;
+
+	/**
+	 * The time helper used for the puzzle.
+	TimeHelper time_helper;
 
         /**
          * Recursive function used to solve the puzzle.

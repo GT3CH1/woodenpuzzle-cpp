@@ -18,17 +18,36 @@ namespace puzzle {
          * Prints all solutions to the puzzle discovered by the driver.
          */
         static void print_all_solutions();
+	
+	/**
+	 * The driver function for when multi-threading is enabled.
+	 */
+	static void multithread_driver(void *args);
     };
 }
-/**
- * The start time of the program.
- */
-static clock_t begin;
 
 /**
- * The end time of the program.
+ * A struct containing the arguments for the multithreaded driver, such as the
+ * thread id and the list of pieces to use.
  */
-static clock_t end;
+struct thread_args {
+    int thread_id;
+    std::vector<PuzzlePiece> pieces;
+};
+
+/**
+ * The time helper used to calculate the time taken to solve the puzzle.
+ */
+static TimeHelper time_helper;
+
+/**
+ * The number of threads to use.
+ */
 static int num_threads = 1;
+
+/**
+ * The index of the first piece set to use.
+ */
 static int start_idx = 0;
+
 #endif //WOODENPUZZLE_CPP_DRIVER_H
